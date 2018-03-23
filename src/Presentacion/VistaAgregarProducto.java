@@ -12,6 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import Negocio.ControlAlmacen;
 import javax.swing.JTextField;
+
+import Modelo.Producto;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -19,11 +22,11 @@ import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class VistaAgregarProducto extends JFrame {
-	
+
 	private JButton agregar, regresa;
 	private JTextField tmodelo, ttipo, tcolor, tcosto, ttalla, tcantidad;
 	private ControlAlmacen control;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -70,7 +73,7 @@ public class VistaAgregarProducto extends JFrame {
 		JPanel panel = new JPanel(null);
 		setContentPane(panel);
 		JLabel titulo, modelo, tipo, color, costo, talla, cantidad;
-		
+
 		ImageIcon imgIcon = new ImageIcon(VistaAgregarProducto.class.getResource("return.png"));
 		Image user = imgIcon.getImage();
 		Image userScaled = user.getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
@@ -166,29 +169,47 @@ public class VistaAgregarProducto extends JFrame {
 		agregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String[] datosvendedor = { tmodelo.getText(), ttipo.getText(), tcolor.getText(), tcosto.getText(),
-						ttalla.getText(), tcantidad.getText() };
-				if (!datosvendedor[0].isEmpty())
-					if (!datosvendedor[1].isEmpty())
-						if (!datosvendedor[2].isEmpty())
-							if (!datosvendedor[3].isEmpty())
-								if (!datosvendedor[4].isEmpty())
-									if (!datosvendedor[5].isEmpty()) {
+				String datomodelo, datotipo, datocolor;
+				double datocosto = 0, datotalla = 0;
+				int productocodigo = control.generaCodigo(), datocantidad = 0;
+				datomodelo = tmodelo.getText();
+				datotipo = ttipo.getText();
+				datocolor = tcolor.getText();
+				if (!datomodelo.isEmpty())
+					if (!datotipo.isEmpty())
+						if (!datocolor.isEmpty()) {
+							if (control.esNumero(tcosto.getText()))
+								datocosto = Double.valueOf(tcosto.getText());
+							if (datocosto != 0) {
+								if (control.esNumero(ttalla.getText()))
+									datotalla = Double.valueOf(ttalla.getText());
+								if (datotalla != 0) {
+									if (control.esNumero(tcantidad.getText()))
+										datocantidad = Integer.valueOf(tcantidad.getText());
+									if (datocantidad != 0) {
 										if (JOptionPane.showConfirmDialog(rootPane,
 												"¿Esta Seguro de Haber Ingresado los Datos Correctamente?",
 												"Datos del Producto",
 												JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-											System.out.println("click en Agregar Producto");
+											Producto producto = new Producto(productocodigo, datomodelo, datotipo,
+													datocolor, datocosto, datotalla, datocantidad);
+											if (control.agregarProducto(producto))
+												JOptionPane.showMessageDialog(null,
+														"El Producto fue Agregado Correctamente");
+											else
+												JOptionPane.showMessageDialog(null,
+														"Error No se Pudo Agregar El Producto");
 											control.muestraVistaAlmacen();
 											dispose();
 										}
 									} else
-										JOptionPane.showMessageDialog(null, "Es Necesario Ingresar la Cantidad");
-								else
-									JOptionPane.showMessageDialog(null, "Es Necesario Ingresar la Talla");
-							else
-								JOptionPane.showMessageDialog(null, "Es Necesario Ingresar el Costo Unitario");
-						else
+										JOptionPane.showMessageDialog(null,
+												"Es Necesario Ingresar una Cantidad Valida");
+								} else
+									JOptionPane.showMessageDialog(null, "Es Necesario Ingresar una Talla Valida");
+							} else
+								JOptionPane.showMessageDialog(null, "Es Necesario Ingresar un Costo Unitario Valido");
+						} else
 							JOptionPane.showMessageDialog(null, "Es Necesario Ingresar el Color");
 					else
 						JOptionPane.showMessageDialog(null, "Es Necesario Ingresar el Tipo");

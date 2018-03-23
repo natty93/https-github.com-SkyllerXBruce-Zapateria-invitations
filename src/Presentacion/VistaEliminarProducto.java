@@ -192,7 +192,7 @@ public class VistaEliminarProducto extends JFrame {
 					if (control.esNumero(tcodigo.getText()))
 						codigop = Integer.valueOf(tcodigo.getText());
 					if (codigop != 0) {
-						if (control.existeVendedor(codigop)) {
+						if (control.existeProducto(codigop)) {
 							Producto producto = control.buscaProducto(codigop);
 							if (JOptionPane.showConfirmDialog(null,
 									"¿Esta seguro de Eliminar el Producto " + producto.dameModelo() + "?",
