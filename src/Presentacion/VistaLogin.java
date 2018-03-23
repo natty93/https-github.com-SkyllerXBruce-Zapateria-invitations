@@ -29,14 +29,13 @@ import javax.swing.event.CaretEvent;
 @SuppressWarnings("serial")
 public class VistaLogin extends JFrame {
 
+	// Variables Globales
 	private JTextField textUser, textPassword;
 	private JButton btnIngresar;
 	private ControlLogin control;
 	private Choice choice;
 
-	/**
-	 * Launch the application.
-	 */
+	// Muestra Solo la Presentacion de la Vista
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

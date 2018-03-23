@@ -9,36 +9,45 @@ import Presentacion.VistaVendedor;
 
 public class ControlLogin {
 
-	// declaramos los atributos de nuestro control.
+	// Variables Globales
 	private VistaVendedor vistavendedor;
 	private VistaAdministrador vistaadmin;
 	private VistaLogin vistalogin;
 	private ServicioLogin serviciologin;
 	private Usuario usuario = new Usuario();
 
-	// Agregamos una instancia de las vistas a nuesto control
+	// Obtiene la Instancia de la Vista "Vendedor"
 	public void setVistaVendedor(VistaVendedor vistavendedor) {
 		this.vistavendedor = vistavendedor;
 	}
-	
+
+	// Obtiene la Instancia de la Vista "Administrador"
 	public void setVistaAdministrador(VistaAdministrador vistaadmin) {
-		this.vistaadmin=vistaadmin;	
-	}
-	
-	public void setVistaLogin(VistaLogin vistalogin) {
-		this.vistalogin=vistalogin;	
+		this.vistaadmin = vistaadmin;
 	}
 
-	// Hacemos visible la ventana "VistaVendedor"
+	// Obtiene la Instancia de la Vista "Login"
+	public void setVistaLogin(VistaLogin vistalogin) {
+		this.vistalogin = vistalogin;
+	}
+
+	// Obtiene la Instancia del Servicio "Login"
+	public void setServicioLogin(ServicioLogin serviciologin) {
+		this.serviciologin = serviciologin;
+	}
+
+	// Hacemos visible la ventana "VistaLogin"
 	public void muestraVistaLogin() {
 		this.vistalogin.setVisible(true);
 	}
-	
+
+	// Hacemos visible la ventana "VistaVendedor"
 	public void muestraVistaVendedor(Usuario user) {
 		vistavendedor.actualizarDatos(user);
 		vistavendedor.setVisible(true);
 	}
-	
+
+	// Hacemos visible la ventana "VistaAdministrador"
 	public void muestraVistaAdministrador(Usuario user) {
 		vistaadmin.actualizarDatos(user);
 		vistaadmin.setVisible(true);
@@ -51,14 +60,16 @@ public class ControlLogin {
 		Usuario user = serviciologin.dameUsuario(usuario.getUsuario(), usuario.getTipo());
 		if (usuario.getTipo().equals("Vendedor")) {
 			if (serviciologin.validaingreso(usuario)) {
-				JOptionPane.showMessageDialog(null,"Ingresaste como: Vendedor" + nl + " Bienvenido " + user.getNombre());
+				JOptionPane.showMessageDialog(null,
+						"Ingresaste como: Vendedor" + nl + " Bienvenido " + user.getNombre());
 				muestraVistaVendedor(user);
 				return true;
 			} else
 				JOptionPane.showMessageDialog(null, "Datos incorrectos");
 		} else if (usuario.getTipo().equals("Administrador")) {
 			if (serviciologin.validaingreso(usuario)) {
-				JOptionPane.showMessageDialog(null, "Ingresaste como: Administrador" + nl + "Bienvenido "+ user.getNombre());
+				JOptionPane.showMessageDialog(null,
+						"Ingresaste como: Administrador" + nl + "Bienvenido " + user.getNombre());
 				muestraVistaAdministrador(user);
 				return true;
 			} else
@@ -67,11 +78,6 @@ public class ControlLogin {
 			JOptionPane.showMessageDialog(null,
 					"Usuario y/o contraseña incorrecta" + nl + "¿Seleccionó correctamente el campo cargo?");
 		return false;
-	}
-
-	// Agregamos instancia de servicio login
-	public void setServicioLogin(ServicioLogin serviciologin) {
-		this.serviciologin = serviciologin;
 	}
 
 	// Validamos que hay algo escrito en el textfield de usuario para consultarlo al
