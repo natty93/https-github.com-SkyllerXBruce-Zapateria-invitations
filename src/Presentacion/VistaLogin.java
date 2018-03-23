@@ -49,7 +49,7 @@ public class VistaLogin extends JFrame {
 		});
 	}
 
-	// Crea la Ventana VistaLogin
+	// Constructor de la Ventana VistaLogin
 	public VistaLogin() {
 		// Propiedades de la Ventana
 		setTitle("Ventana Principal");
@@ -196,7 +196,7 @@ public class VistaLogin extends JFrame {
 		});
 	}
 
-	// Instanciamos control a nuestra vista.
+	// Obtenemos la Instancia del Control Login
 	public void setControl(ControlLogin controllog) {
 		this.control = controllog;
 	}

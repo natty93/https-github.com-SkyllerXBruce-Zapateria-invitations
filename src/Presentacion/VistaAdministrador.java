@@ -21,15 +21,14 @@ import Negocio.ControlVendedores;
 @SuppressWarnings("serial")
 public class VistaAdministrador extends JFrame {
 
+	// Variables Globales
 	private JButton vendedores, almacen, comiciones, cerrarsesion;
 	private JLabel nombre, correo, telefono;
 	private ControlVendedores control;
 	private ControlLogin controllogin;
 	private ControlAlmacen controlalmacen;
 
-	/**
-	 * Launch the application.
-	 */
+	// Muestra Solo la Presentacion de la Vista
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,7 +42,9 @@ public class VistaAdministrador extends JFrame {
 		});
 	}
 
+	// Constructor de la Ventana VistaAdministrador
 	public VistaAdministrador() {
+		// Propiedades de la Ventana
 		setSize(500, 320);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -66,6 +67,7 @@ public class VistaAdministrador extends JFrame {
 		});
 	}
 
+	// Creamos y Agregamos los Componetes de la Ventana
 	private void iniciarComponentes() {
 		// creamos el panel y lo agregamos a la ventana
 		JPanel panel = new JPanel(null);
@@ -91,6 +93,7 @@ public class VistaAdministrador extends JFrame {
 
 		// Se Realiza Acciones de los Componentes
 		accionesComponentes();
+		
 		// Agregamos los Componentes al Panel
 		panel.add(titulo);
 		panel.add(nombre);
@@ -159,18 +162,22 @@ public class VistaAdministrador extends JFrame {
 		});
 	}
 
+	// Obtenemos la Instancia del Control Vendedores
 	public void setControl(ControlVendedores control) {
 		this.control = control;
 	}
 
+	// Obtenemos la Instancia del Control Login
 	public void setControl(ControlLogin controllogin) {
 		this.controllogin = controllogin;
 	}
 	
+	// Obtenemos la Instancia del Control Almacen
 	public void setControl(ControlAlmacen controlalmacen) {
 		this.controlalmacen = controlalmacen;
 	}
 
+	// Se Obtiene los Datos del Usuario Ingresado
 	public void actualizarDatos(Usuario user) {
 		this.nombre.setText(user.getNombre());
 		this.correo.setText(user.getCorreo());

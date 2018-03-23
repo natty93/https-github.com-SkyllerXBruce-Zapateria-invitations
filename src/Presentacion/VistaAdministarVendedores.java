@@ -20,12 +20,11 @@ import Negocio.ControlVendedores;
 @SuppressWarnings("serial")
 public class VistaAdministarVendedores extends JFrame {
 
+	// Variable Global
 	private JButton agregar, eliminar, consultar, listar, regresar;
 	private ControlVendedores control;
 
-	/**
-	 * Launch the application.
-	 */
+	// Muestra Solo la Presentacion de la Vista
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -39,7 +38,9 @@ public class VistaAdministarVendedores extends JFrame {
 		});
 	}
 
+	// Constructor de la Ventana VistaAdministrarVendedores
 	public VistaAdministarVendedores() {
+		// Propiedades de la Ventana
 		setSize(480, 300);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -62,12 +63,14 @@ public class VistaAdministarVendedores extends JFrame {
 		});
 	}
 
+	// Creamos y Agregamos los Componetes de la Ventana
 	private void iniciarComponentes() {
 		// creamos el panel y lo agregamos a la ventana
 		JPanel panel = new JPanel(null);
 		setContentPane(panel);
 		JLabel titulo;
 		
+		// Imagen del Boton regresar
 		ImageIcon imgIcon = new ImageIcon(VistaAdministarVendedores.class.getResource("return.png"));
 		Image user = imgIcon.getImage();
 		Image userScaled = user.getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
@@ -92,6 +95,7 @@ public class VistaAdministarVendedores extends JFrame {
 
 		// Se Realiza Acciones de los Componentes
 		accionesComponentes();
+		
 		// Agregamos los Componentes al Panel
 		panel.add(titulo);
 		panel.add(agregar);
@@ -103,11 +107,7 @@ public class VistaAdministarVendedores extends JFrame {
 
 	// Método Para Crear las Propiedades del boton
 	private JButton creaBoton(String nombre, int posx, int posy, int ancho, int alto) {
-		// Se Crea e Inicializa un boton de la Clase JButton
 		JButton boton = new JButton(nombre);
-
-		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto del Boton Como la
-		// Letra del Texto
 		boton.setBounds(posx, posy, ancho, alto);
 		boton.setFont(new Font("Serif", Font.ITALIC, 14));
 		return boton;
@@ -115,11 +115,7 @@ public class VistaAdministarVendedores extends JFrame {
 
 	// Método Para Crear las Propiedades de las Etiquetas
 	private JLabel creaEtiqueta(String nombre, int posx, int posy, int ancho, int alto, int tamaño) {
-		// Se Crea e Inicializa una Etiqueta de la Clase JLabel
 		JLabel etiqueta = new JLabel(nombre);
-
-		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de la Etiqueta asi
-		// Como la Letra del Texto
 		etiqueta.setBounds(posx, posy, ancho, alto);
 		etiqueta.setFont(new Font("Serif", Font.ITALIC, tamaño));
 		return etiqueta;
@@ -127,7 +123,7 @@ public class VistaAdministarVendedores extends JFrame {
 
 	// Método para Crear las Acciones de Los Componentes
 	private void accionesComponentes() {
-		// Accion del boton vendedores
+		// Accion del boton Agregar 
 		agregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -136,7 +132,7 @@ public class VistaAdministarVendedores extends JFrame {
 			}
 		});
 
-		// Accion del boton vendedores
+		// Accion del boton Eliminar
 		eliminar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -145,7 +141,7 @@ public class VistaAdministarVendedores extends JFrame {
 			}
 		});
 
-		// Accion del boton Comiciones
+		// Accion del boton Consultar
 		consultar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -154,6 +150,7 @@ public class VistaAdministarVendedores extends JFrame {
 			}
 		});
 
+		// Accion del boton Listar
 		listar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -162,7 +159,8 @@ public class VistaAdministarVendedores extends JFrame {
 				dispose();
 			}
 		});
-		// Accion de Boton Cerrar Sesion
+		
+		// Accion de Boton Regresar
 		regresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -172,6 +170,7 @@ public class VistaAdministarVendedores extends JFrame {
 		});
 	}
 
+	// Obtenemos la Instancia del Control Vendedor
 	public void setControl(ControlVendedores control) {
 		this.control = control;
 	}
