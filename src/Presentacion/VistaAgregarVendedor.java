@@ -1,5 +1,6 @@
 package Presentacion;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -20,12 +21,28 @@ import Negocio.ControlVendedores;
 @SuppressWarnings("serial")
 public class VistaAgregarVendedor extends JFrame {
 
+	// Variables Globales
 	private JButton ingresar, regresar;
 	private JTextField tnombre, tapaterno, tamaterno, tcurp, tcorreo, ttelefono;
 	private ControlVendedores control;
 
+	// Muestra Solo la Presentacion de la Vista
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VistaAgregarVendedor frame = new VistaAgregarVendedor();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	// Constructor de la Ventana VistaAgregarVendedor
 	public VistaAgregarVendedor() {
-		// Tamaño de la Ventana
+		// Propiedades de la Ventana
 		setSize(480, 460);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -49,12 +66,14 @@ public class VistaAgregarVendedor extends JFrame {
 		});
 	}
 
+	// Creamos y Agregamos los Componetes de la Ventana
 	private void iniciarComponentes() {
 		// creamos el panel y lo agregamos a la ventana
 		JPanel panel = new JPanel(null);
 		setContentPane(panel);
 		JLabel titulo, nombre, apaterno, amaterno, curp, correo, telefono;
-		
+
+		// Imagen del Boton regresar
 		ImageIcon imgIcon = new ImageIcon(VistaAgregarVendedor.class.getResource("return.png"));
 		Image user = imgIcon.getImage();
 		Image userScaled = user.getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
@@ -62,7 +81,8 @@ public class VistaAgregarVendedor extends JFrame {
 
 		// Creamos y Agregamos las Propiedades del Método creaBoton para Cada Boton
 		ingresar = creaBoton("Ingresar", 260, 380, 150, 30);
-		regresar = creaBoton("Cancelar", 40, 380, 150, 30);
+		regresar = creaBoton("", 40, 360, 50, 50);
+		regresar.setIcon(imgIcon);
 		ingresar.setToolTipText("Agrega los Datos del Vendedor");
 		regresar.setToolTipText("Cancela la Operacion y Regresa a la Ventana de Administrar Vendedores");
 
@@ -99,6 +119,7 @@ public class VistaAgregarVendedor extends JFrame {
 
 		// Se Realiza Acciones de los Componentes
 		accionesComponentes();
+		
 		// Agregamos los Componentes al Panel
 		panel.add(titulo);
 		panel.add(nombre);
@@ -115,16 +136,11 @@ public class VistaAgregarVendedor extends JFrame {
 		panel.add(ttelefono);
 		panel.add(ingresar);
 		panel.add(regresar);
-
 	}
 
 	// Método Para Crear las Propiedades del boton
 	private JButton creaBoton(String nombre, int posx, int posy, int ancho, int alto) {
-		// Se Crea e Inicializa un boton de la Clase JButton
 		JButton boton = new JButton(nombre);
-
-		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto del Boton Como la
-		// Letra del Texto
 		boton.setBounds(posx, posy, ancho, alto);
 		boton.setFont(new Font("Serif", Font.ITALIC, 14));
 		return boton;
@@ -132,11 +148,7 @@ public class VistaAgregarVendedor extends JFrame {
 
 	// Método Para Crear las Propiedades de las Etiquetas
 	private JLabel creaEtiqueta(String nombre, int posx, int posy, int ancho, int alto, int tamaño) {
-		// Se Crea e Inicializa una Etiqueta de la Clase JLabel
 		JLabel etiqueta = new JLabel(nombre);
-
-		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de la Etiqueta asi
-		// Como la Letra del Texto
 		etiqueta.setBounds(posx, posy, ancho, alto);
 		etiqueta.setFont(new Font("Serif", Font.ITALIC, tamaño));
 		return etiqueta;
@@ -144,11 +156,7 @@ public class VistaAgregarVendedor extends JFrame {
 
 	// Método Para Crear las Propiedades de los Cuadros de Texto
 	private JTextField creaCuadroTexto(int posx, int posy, int ancho, int alto, int tamaño) {
-		// Se Crea e Inicializa el Cuadro de Texto de la Clase JTextField
 		JTextField texto = new JTextField();
-
-		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto del Cuadro de Texto
-		// asi como la Letra del Texto y se Asegura que Este Vacio el Cuadro de Texto
 		texto.setBounds(posx, posy, ancho, alto);
 		texto.setFont(new Font("Serif", Font.ITALIC, tamaño));
 		texto.setText("");
@@ -192,7 +200,7 @@ public class VistaAgregarVendedor extends JFrame {
 			}
 		});
 
-		// Accion del boton Comiciones
+		// Accion del boton Regresa
 		regresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -203,6 +211,7 @@ public class VistaAgregarVendedor extends JFrame {
 		});
 	}
 
+	// Metodo que limpia los TextFields
 	public void limpiarDatosAgregarVendedor() {
 		tnombre.setText("");
 		tapaterno.setText("");
@@ -212,6 +221,7 @@ public class VistaAgregarVendedor extends JFrame {
 		ttelefono.setText("");
 	}
 
+	// Obtenemos la Instancia del Control Vendedor
 	public void setControl(ControlVendedores controlvendedores) {
 		this.control = controlvendedores;
 	}

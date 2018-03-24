@@ -23,15 +23,14 @@ import Negocio.ControlVendedores;
 @SuppressWarnings("serial")
 public class VistaAgregarUsuario extends JFrame {
 
+	// Variables Globales
 	private JButton agregar, regresar;
 	private JTextField tusuario;
 	private JPasswordField tcontrasena;
 	private String[] datosVendedor;
 	private ControlVendedores control;
 	
-	/**
-	 * Launch the application.
-	 */
+	// Muestra Solo la Presentacion de la Vista
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -45,8 +44,9 @@ public class VistaAgregarUsuario extends JFrame {
 		});
 	}
 
+	// Constructor de la Ventana VistaAgregarUsuario
 	public VistaAgregarUsuario() {
-		// Tamaño de la Ventana
+		// Propiedades de la Ventana
 		setSize(480, 320);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -71,12 +71,14 @@ public class VistaAgregarUsuario extends JFrame {
 		});
 	}
 
+	// Creamos y Agregamos los Componetes de la Ventana
 	private void iniciarComponentes() {
 		// creamos el panel y lo agregamos a la ventana
 		JPanel panel = new JPanel(null);
 		JLabel titulo1, titulo2, usuario, contrasena;
 		setContentPane(panel);
 		
+		// Imagen del Boton regresar
 		ImageIcon imgIcon = new ImageIcon(VistaAgregarUsuario.class.getResource("return.png"));
 		Image user = imgIcon.getImage();
 		Image userScaled = user.getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
@@ -88,6 +90,7 @@ public class VistaAgregarUsuario extends JFrame {
 		regresar.setIcon(imgIcon);
 		agregar.setToolTipText("Agrega Usuario y Contraseña del Vendedor");
 		regresar.setToolTipText("Regresa a la Ventana de Agregar Vendedor");
+		
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de las Etiquetas
 		// Como de la Letra
 		titulo1 = creaEtiqueta("Asignar Usuario y Cotraseña", 30, 40, 480, 35, 30);
@@ -125,11 +128,7 @@ public class VistaAgregarUsuario extends JFrame {
 
 	// Método Para Crear las Propiedades del boton
 	private JButton creaBoton(String nombre, int posx, int posy, int ancho, int alto) {
-		// Se Crea e Inicializa un boton de la Clase JButton
 		JButton boton = new JButton(nombre);
-
-		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto del Boton Como la
-		// Letra del Texto
 		boton.setBounds(posx, posy, ancho, alto);
 		boton.setFont(new Font("Serif", Font.ITALIC, 14));
 		return boton;
@@ -137,11 +136,7 @@ public class VistaAgregarUsuario extends JFrame {
 
 	// Método Para Crear las Propiedades de las Etiquetas
 	private JLabel creaEtiqueta(String nombre, int posx, int posy, int ancho, int alto, int tamaño) {
-		// Se Crea e Inicializa una Etiqueta de la Clase JLabel
 		JLabel etiqueta = new JLabel(nombre);
-
-		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de la Etiqueta asi
-		// Como la Letra del Texto
 		etiqueta.setBounds(posx, posy, ancho, alto);
 		etiqueta.setFont(new Font("Serif", Font.ITALIC, tamaño));
 		return etiqueta;
@@ -149,11 +144,7 @@ public class VistaAgregarUsuario extends JFrame {
 
 	// Método Para Crear las Propiedades de los Cuadros de Texto
 	private JTextField creaCuadroTexto(int posx, int posy, int ancho, int alto, int tamaño) {
-		// Se Crea e Inicializa el Cuadro de Texto de la Clase JTextField
 		JTextField texto = new JTextField();
-
-		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto del Cuadro de Texto
-		// asi como la Letra del Texto y se Asegura que Este Vacio el Cuadro de Texto
 		texto.setBounds(posx, posy, ancho, alto);
 		texto.setFont(new Font("Serif", Font.ITALIC, tamaño));
 		texto.setText("");
@@ -195,7 +186,7 @@ public class VistaAgregarUsuario extends JFrame {
 			}
 		});
 
-		// Accion de Boton Cancelar
+		// Accion de Boton Regresar
 		regresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -206,15 +197,18 @@ public class VistaAgregarUsuario extends JFrame {
 		});
 	}
 
+	// Metodo para llenar la tabla con los Datos del Vendedor
 	public void obtenerDatosVendedor(String[] datosvendedor) {
 		this.datosVendedor = datosvendedor;
 	}
 
+	// Metodo que limpia los TextFields
 	public void limpiarDatosAgregarUsuario() {
 		tusuario.setText("");
 		tcontrasena.setText("");
 	}
 
+	// Obtenemos la Instancia del Control Vendedor
 	public void setControl(ControlVendedores controlvendedores) {
 		this.control = controlvendedores;
 	}
