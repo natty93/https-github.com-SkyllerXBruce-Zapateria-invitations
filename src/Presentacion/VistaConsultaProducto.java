@@ -30,8 +30,8 @@ import javax.swing.JButton;
 public class VistaConsultaProducto extends JFrame {
 
 	private JButton consultar, regresa;
-	private JTextField tmodelo, ttipo, tcodigo;
-	private JLabel codigo, modelo, tipo;
+	private JTextField tmodelo, ttipo, tcolor, ttalla, tcodigo;
+	private JLabel codigo, modelo, tipo, color, talla;
 	private boolean pormodelo, porcodigo;
 	private ControlAlmacen control;
 
@@ -53,7 +53,7 @@ public class VistaConsultaProducto extends JFrame {
 
 	public VistaConsultaProducto() {
 		// Tamaño de la Ventana
-		setSize(480, 460);
+		setSize(480, 540);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		confirmarSalida();
@@ -88,8 +88,8 @@ public class VistaConsultaProducto extends JFrame {
 		imgIcon = new ImageIcon(userScaled);
 
 		// Creamos y Agregamos las Propiedades del Método creaBoton para Cada Boton
-		consultar = creaBoton("Consultar", 280, 360, 150, 30);
-		regresa = creaBoton("", 40, 350, 50, 50);
+		consultar = creaBoton("Consultar", 280, 440, 150, 30);
+		regresa = creaBoton("", 40, 430, 50, 50);
 		regresa.setIcon(imgIcon);
 		consultar.setToolTipText("Consulta el Producto del Almacen");
 		regresa.setToolTipText("Cancela la Operacion y Regresa a la Ventana de Administrar Almacen");
@@ -100,8 +100,10 @@ public class VistaConsultaProducto extends JFrame {
 		modelotipo = creaEtiqueta("Por Modelo y Tipo de Producto", 40, 120, 260, 25, 16);
 		modelo = creaEtiqueta("Modelo:", 60, 160, 140, 25, 16);
 		tipo = creaEtiqueta("Tipo:", 60, 200, 140, 25, 16);
-		numcodigo = creaEtiqueta("Por Número de Código", 40, 260, 180, 25, 16);
-		codigo = creaEtiqueta("Código:", 60, 300, 140, 25, 16);
+		color = creaEtiqueta("Color:", 60, 240, 140, 25, 16);
+		talla = creaEtiqueta("Talla:", 60, 280, 140, 25, 16);
+		numcodigo = creaEtiqueta("Por Número de Código", 40, 340, 180, 25, 16);
+		codigo = creaEtiqueta("Código:", 60, 380, 140, 25, 16);
 		modelotipo.setToolTipText("Ingrese el Modelo y el Tipo del Producto");
 		modelo.setToolTipText("Ingrese el Modelo del Producto");
 		tipo.setToolTipText("Ingrese el Tipo del Producto");
@@ -112,7 +114,9 @@ public class VistaConsultaProducto extends JFrame {
 		// Como de la Letra
 		tmodelo = creaCuadroTexto(210, 160, 250, 25, 14);
 		ttipo = creaCuadroTexto(210, 200, 250, 25, 14);
-		tcodigo = creaCuadroTexto(210, 300, 250, 25, 14);
+		tcolor = creaCuadroTexto(210, 240, 250, 25, 14);
+		ttalla = creaCuadroTexto(210, 280, 250, 25, 14);
+		tcodigo = creaCuadroTexto(210, 380, 250, 25, 14);
 		tmodelo.setToolTipText("Ingrese el Modelo del Producto");
 		ttipo.setToolTipText("Ingrese el Tipo del Producto");
 		tcodigo.setToolTipText("Ingrese el Codigo del Producto");
@@ -123,11 +127,15 @@ public class VistaConsultaProducto extends JFrame {
 		panel.add(titulo);
 		panel.add(modelo);
 		panel.add(tipo);
+		panel.add(color);
+		panel.add(talla);
 		panel.add(modelotipo);
 		panel.add(codigo);
 		panel.add(numcodigo);
 		panel.add(tmodelo);
 		panel.add(ttipo);
+		panel.add(tcolor);
+		panel.add(ttalla);
 		panel.add(tcodigo);
 		panel.add(consultar);
 		panel.add(regresa);
@@ -166,17 +174,29 @@ public class VistaConsultaProducto extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (pormodelo) {
+					int productotalla = 0;
 					String productomodelo = tmodelo.getText();
 					String productotipo = ttipo.getText();
+					String productocolor = tcodigo.getText();
 					if (!tmodelo.getText().isEmpty())
 						if (!ttipo.getText().isEmpty())
-							if (control.existeProducto(productomodelo, productotipo)) {
-								Producto producto = control.buscaProducto(productomodelo, productotipo);
-								control.muestraVistaConsultaProductoRealizada(producto);
-								dispose();
+							if (!tcolor.getText().isEmpty()) {
+								if (control.esNumero(ttalla.getText()))
+									productotalla = Integer.valueOf(ttalla.getText());
+								if (productotalla > 0)
+									if (control.existeProducto(productomodelo, productotipo, productocolor,
+											productotalla)) {
+										Producto producto = control.buscaProducto(productomodelo, productotipo,
+												productocolor, productotalla);
+										control.muestraVistaConsultaProductoRealizada(producto);
+										dispose();
+									} else
+										JOptionPane.showMessageDialog(null,
+												"El Producto No se Encuentra, Verifique que el Modelo o Tipo sean Correctos");
+								else
+									JOptionPane.showMessageDialog(null, "Es Necesario Escribir una Talla Valida");
 							} else
-								JOptionPane.showMessageDialog(null,
-										"El Producto No se Encuentra, Verifique que el Modelo o Tipo sean Correctos");
+								JOptionPane.showMessageDialog(null, "Es Necesario Escribir el Color");
 						else
 							JOptionPane.showMessageDialog(null, "Es Necesario Escribir el Tipo");
 					else
@@ -203,10 +223,12 @@ public class VistaConsultaProducto extends JFrame {
 		tmodelo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				String nombre, apaterno;
-				nombre = tmodelo.getText();
-				apaterno = ttipo.getText();
-				if (nombre.isEmpty() && apaterno.isEmpty()) {
+				String modelo, tipo, color, talla;
+				modelo = tmodelo.getText();
+				tipo = ttipo.getText();
+				color = tcolor.getText();
+				talla = ttalla.getText();
+				if (modelo.isEmpty() && tipo.isEmpty() && color.isEmpty() && talla.isEmpty()) {
 					codigo.setEnabled(true);
 					tcodigo.setEnabled(true);
 					pormodelo = false;
@@ -221,10 +243,52 @@ public class VistaConsultaProducto extends JFrame {
 		ttipo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				String nombre, apaterno;
-				nombre = tmodelo.getText();
-				apaterno = ttipo.getText();
-				if (nombre.isEmpty() && apaterno.isEmpty()) {
+				String modelo, tipo, color, talla;
+				modelo = tmodelo.getText();
+				tipo = ttipo.getText();
+				color = tcolor.getText();
+				talla = ttalla.getText();
+				if (modelo.isEmpty() && tipo.isEmpty() && color.isEmpty() && talla.isEmpty()) {
+					codigo.setEnabled(true);
+					tcodigo.setEnabled(true);
+					pormodelo = false;
+				} else {
+					codigo.setEnabled(false);
+					tcodigo.setEnabled(false);
+					pormodelo = true;
+				}
+			}
+		});
+
+		tcolor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String modelo, tipo, color, talla;
+				modelo = tmodelo.getText();
+				tipo = ttipo.getText();
+				color = tcolor.getText();
+				talla = ttalla.getText();
+				if (modelo.isEmpty() && tipo.isEmpty() && color.isEmpty() && talla.isEmpty()) {
+					codigo.setEnabled(true);
+					tcodigo.setEnabled(true);
+					pormodelo = false;
+				} else {
+					codigo.setEnabled(false);
+					tcodigo.setEnabled(false);
+					pormodelo = true;
+				}
+			}
+		});
+
+		ttalla.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String modelo, tipo, color, talla;
+				modelo = tmodelo.getText();
+				tipo = ttipo.getText();
+				color = tcolor.getText();
+				talla = ttalla.getText();
+				if (modelo.isEmpty() && tipo.isEmpty() && color.isEmpty() && talla.isEmpty()) {
 					codigo.setEnabled(true);
 					tcodigo.setEnabled(true);
 					pormodelo = false;
@@ -242,14 +306,22 @@ public class VistaConsultaProducto extends JFrame {
 				if (tcodigo.getText().isEmpty()) {
 					modelo.setEnabled(true);
 					tipo.setEnabled(true);
+					color.setEnabled(true);
+					talla.setEnabled(true);
 					tmodelo.setEnabled(true);
 					ttipo.setEnabled(true);
+					tcolor.setEnabled(true);
+					ttalla.setEnabled(true);
 					porcodigo = false;
 				} else {
 					modelo.setEnabled(false);
 					tipo.setEnabled(false);
+					color.setEnabled(false);
+					talla.setEnabled(false);
 					tmodelo.setEnabled(false);
 					ttipo.setEnabled(false);
+					tcolor.setEnabled(false);
+					ttalla.setEnabled(false);
 					porcodigo = true;
 				}
 			}
@@ -269,11 +341,17 @@ public class VistaConsultaProducto extends JFrame {
 	public void limpiarDatosConsultarProducto() {
 		tmodelo.setText("");
 		ttipo.setText("");
+		tcolor.setText("");
+		ttalla.setText("");
 		tcodigo.setText("");
 		modelo.setEnabled(true);
 		tipo.setEnabled(true);
+		color.setEnabled(true);
+		talla.setEnabled(true);
 		tmodelo.setEnabled(true);
 		ttipo.setEnabled(true);
+		tcolor.setEnabled(true);
+		ttalla.setEnabled(true);
 		codigo.setEnabled(true);
 		tcodigo.setEnabled(true);
 		pormodelo = false;

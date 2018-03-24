@@ -1,4 +1,5 @@
 package Persistencia;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -6,12 +7,12 @@ import java.util.ArrayList;
 import Modelo.Producto;
 import java.sql.ResultSet;
 
-
 public class DAOAlmacen {
-	
-	public DAOAlmacen(){
-		
+
+	public DAOAlmacen() {
+
 	}
+
 	//
 	public boolean agregaProducto(Producto producto) {
 		try {
@@ -45,6 +46,25 @@ public class DAOAlmacen {
 			return true;
 	}
 
+	public Producto buscaProducto(String modelo, String tipo, String color, double Talla) {
+		Producto producto = null;
+		try {
+			// Crea el statement
+			Statement statement = ManejadorBD.dameConnection().createStatement();
+			// Recibe los resutados
+			ResultSet rs = statement.executeQuery("SELECT * FROM Almacen WHERE Modelo='" + modelo + "' AND Tipo='"
+					+ tipo + "' AND Color='" + color + "' AND Talla=" + Talla + "");
+			if (rs.next()) {
+				// Crea una nueva instancia del objeto
+				producto = new Producto(rs.getInt("Codigo"), rs.getString("Modelo"), rs.getString("Tipo"),
+						rs.getString("Color"), rs.getDouble("Costo"), rs.getDouble("Talla"), rs.getInt("Cantidad"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return producto;
+	}
+
 	//
 	public Producto buscaProducto(String modelo, String tipo) {
 		Producto producto = null;
@@ -73,7 +93,7 @@ public class DAOAlmacen {
 			Statement statement = ManejadorBD.dameConnection().createStatement();
 			// Recibe los resutados
 			ResultSet rs = statement.executeQuery("SELECT * FROM Almacen WHERE Codigo=" + codigo);
-			if (rs.next()) 
+			if (rs.next())
 				// Crea una nueva instancia del objeto
 				producto = new Producto(rs.getInt("Codigo"), rs.getString("Modelo"), rs.getString("Tipo"),
 						rs.getString("Color"), rs.getDouble("Costo"), rs.getDouble("Talla"), rs.getInt("Cantidad"));
@@ -121,5 +141,5 @@ public class DAOAlmacen {
 		}
 		return 0;
 	}
-	
+
 }

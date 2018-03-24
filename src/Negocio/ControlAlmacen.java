@@ -101,8 +101,8 @@ public class ControlAlmacen {
 		}
 	}
 
-	public boolean existeProducto(String modelo, String tipo) {
-		if (servicioalmacen.buscaProducto(modelo, tipo) != null)
+	public boolean existeProducto(String modelo, String tipo, String color, double talla) {
+		if (servicioalmacen.buscaProducto(modelo, tipo, color, talla) != null)
 			return true;
 		return false;
 	}
@@ -115,6 +115,10 @@ public class ControlAlmacen {
 
 	public Producto buscaProducto(String modelo, String tipo) {
 		return servicioalmacen.buscaProducto(modelo, tipo);
+	}
+	
+	public Producto buscaProducto(String modelo, String tipo,String color,double talla) {
+		return servicioalmacen.buscaProducto(modelo, tipo, color, talla);
 	}
 
 	public Producto buscaProducto(int codigo) {
@@ -130,7 +134,14 @@ public class ControlAlmacen {
 	}
 
 	public int generaCodigo() {
-		return servicioalmacen.cantidadProductos() + 1;
+		int codigo = 1, j = 0, cantidad = servicioalmacen.cantidadProductos();
+		for (int i = j; i < cantidad; i++) {
+			for (Producto p : servicioalmacen.dameProductos()) 
+				if(p.dameCodigo()==codigo)
+					codigo++;
+			j++;
+		}
+		return codigo;
 	}
 
 	public void cargarDatosProductos() {

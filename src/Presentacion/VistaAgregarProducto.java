@@ -74,7 +74,7 @@ public class VistaAgregarProducto extends JFrame {
 		JPanel panel = new JPanel(null);
 		JLabel titulo, modelo, tipo, color, costo, talla, cantidad;
 		Componentes componente = new Componentes();
-		
+
 		setContentPane(panel);
 
 		// Imagen del Boton regresar
@@ -123,7 +123,7 @@ public class VistaAgregarProducto extends JFrame {
 
 		// Se Realiza Acciones de los Componentes
 		accionesComponentes();
-		
+
 		// Agregamos los Componentes al Panel
 		panel.add(titulo);
 		panel.add(modelo);
@@ -170,15 +170,31 @@ public class VistaAgregarProducto extends JFrame {
 												"¿Esta Seguro de Haber Ingresado los Datos Correctamente?",
 												"Datos del Producto",
 												JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-											Producto producto = new Producto(productocodigo, datomodelo, datotipo,
-													datocolor, datocosto, datotalla, datocantidad);
-											if (control.agregarProducto(producto))
-												JOptionPane.showMessageDialog(null,
-														"El Producto fue Agregado Correctamente");
-											else
-												JOptionPane.showMessageDialog(null,
-														"Error No se Pudo Agregar El Producto");
+											if (control.existeProducto(datomodelo, datotipo, datocolor, datotalla)) {
+												Producto nuevo = control.buscaProducto(datomodelo, datotipo, datocolor,
+														datotalla);
+												if (control.eliminarProducto(nuevo)) {
+													nuevo.setCosto(datocosto);
+													nuevo.setCantidad(datocantidad);
+													if (control.agregarProducto(nuevo))
+														JOptionPane.showMessageDialog(null,
+																"El Producto fue Agregado Correctamente");
+													else
+														JOptionPane.showMessageDialog(null,
+																"Error No se Pudo Agregar El Producto");
+												}
+											} else {
+												Producto producto = new Producto(productocodigo, datomodelo, datotipo,
+														datocolor, datocosto, datotalla, datocantidad);
+												if (control.agregarProducto(producto))
+													JOptionPane.showMessageDialog(null,
+															"El Producto fue Agregado Correctamente");
+												else
+													JOptionPane.showMessageDialog(null,
+															"Error No se Pudo Agregar El Producto");
+											}
 											control.muestraVistaAlmacen();
+											control.limpiarDatos("Agregar");
 											dispose();
 										}
 									} else
