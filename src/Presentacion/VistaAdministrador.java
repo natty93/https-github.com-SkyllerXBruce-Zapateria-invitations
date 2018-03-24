@@ -22,7 +22,7 @@ import Negocio.ControlVendedores;
 public class VistaAdministrador extends JFrame {
 
 	// Variables Globales
-	private JButton vendedores, almacen, comiciones, cerrarsesion;
+	private JButton vendedores, almacen, balance, cerrarsesion;
 	private JLabel nombre, correo, telefono;
 	private ControlVendedores control;
 	private ControlLogin controllogin;
@@ -79,11 +79,11 @@ public class VistaAdministrador extends JFrame {
 		// Creamos y Agregamos las Propiedades del Método creaBoton para Cada Boton
 		vendedores = componente.creaBoton("Vendedores", 360, 100, 120, 30);
 		almacen = componente.creaBoton("Almacen", 360, 150, 120, 30);
-		comiciones = componente.creaBoton("Comiciones", 360, 200, 120, 30);
+		balance = componente.creaBoton("Balance", 360, 200, 120, 30);
 		cerrarsesion = componente.creaBoton("Cerrar Sesión", 20, 240, 140, 30);
 		vendedores.setToolTipText("Accesar a los Vendedores (Agregar, Consultar, Eliminar, Listar)");
 		almacen.setToolTipText("Accesar al Almacen de Productos (Agregar, Consultar, Eliminar, Listar)");
-		comiciones.setToolTipText("Accesar a las Comiciones (Asignar, Consultar,Modificar, Listar)");
+		balance.setToolTipText("Accesar a las Comiciones (Asignar, Consultar,Modificar, Listar)");
 		cerrarsesion.setToolTipText("Regresa a la Ventana de Acceso");
 
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de las Etiquetas
@@ -103,7 +103,7 @@ public class VistaAdministrador extends JFrame {
 		panel.add(telefono);
 		panel.add(vendedores);
 		panel.add(almacen);
-		panel.add(comiciones);
+		panel.add(balance);
 		panel.add(cerrarsesion);
 	}
 
@@ -128,7 +128,7 @@ public class VistaAdministrador extends JFrame {
 		});
 
 		// Accion del boton Comiciones
-		comiciones.addMouseListener(new MouseAdapter() {
+		balance.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("Click en Comiciones");
