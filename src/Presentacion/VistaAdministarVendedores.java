@@ -90,9 +90,9 @@ public class VistaAdministarVendedores extends JFrame {
 		// Como de la Letra
 		titulo = creaEtiqueta("Administrar Vendedores", 80, 40, 340, 28, 28);
 
-		// Se Realiza Acciones de los Componentes
+		// Se Realiza acciones en los componentes
 		accionesComponentes();
-		// Agregamos los Componentes al Panel
+		// Agregamos los Componentes al Panel, para su posterior uso
 		panel.add(titulo);
 		panel.add(agregar);
 		panel.add(eliminar);
