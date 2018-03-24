@@ -186,7 +186,7 @@ public class VistaConsultaProducto extends JFrame {
 					if (control.esNumero(tcodigo.getText()))
 						productocodigo = Integer.valueOf(tcodigo.getText());
 					if (productocodigo != 0) {
-						if (control.existeVendedor(productocodigo)) {
+						if (control.existeProducto(productocodigo)) {
 							Producto producto = control.buscaProducto(productocodigo);
 							control.muestraVistaConsultaProductoRealizada(producto);
 							dispose();
@@ -201,7 +201,6 @@ public class VistaConsultaProducto extends JFrame {
 		});
 
 		tmodelo.addKeyListener(new KeyAdapter() {
-
 			@Override
 			public void keyReleased(KeyEvent e) {
 				String nombre, apaterno;
@@ -277,8 +276,8 @@ public class VistaConsultaProducto extends JFrame {
 		ttipo.setEnabled(true);
 		codigo.setEnabled(true);
 		tcodigo.setEnabled(true);
-		pormodelo = true;
-		porcodigo = true;
+		pormodelo = false;
+		porcodigo = false;
 	}
 
 	public void setControl(ControlAlmacen controlalmacen) {

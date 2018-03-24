@@ -29,14 +29,13 @@ import javax.swing.event.CaretEvent;
 @SuppressWarnings("serial")
 public class VistaLogin extends JFrame {
 
+	// Variables Globales
 	private JTextField textUser, textPassword;
 	private JButton btnIngresar;
 	private ControlLogin control;
 	private Choice choice;
 
-	/**
-	 * Launch the application.
-	 */
+	// Muestra Solo la Presentacion de la Vista
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -50,7 +49,7 @@ public class VistaLogin extends JFrame {
 		});
 	}
 
-	// Crea la Ventana VistaLogin
+	// Constructor de la Ventana VistaLogin
 	public VistaLogin() {
 		// Propiedades de la Ventana
 		setTitle("Ventana Principal");
@@ -197,7 +196,7 @@ public class VistaLogin extends JFrame {
 		});
 	}
 
-	// Instanciamos control a nuestra vista.
+	// Obtenemos la Instancia del Control Login
 	public void setControl(ControlLogin controllog) {
 		this.control = controllog;
 	}

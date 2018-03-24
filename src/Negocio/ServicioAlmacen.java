@@ -29,4 +29,14 @@ public class ServicioAlmacen {
 		return dao.buscaProducto(modelo, tipo);
 	}
 
+	public int cantidadProductos() {
+		if (dao.cuantosProductos() != 0)
+			return dao.cuantosProductos();
+		return 0;
+	}
+
+	public boolean agregarProducto(Producto producto) {
+		return dao.agregaProducto(producto);
+	}
+
 }

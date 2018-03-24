@@ -107,7 +107,7 @@ public class ControlAlmacen {
 		return false;
 	}
 
-	public boolean existeVendedor(int codigo) {
+	public boolean existeProducto(int codigo) {
 		if (servicioalmacen.buscaProducto(codigo) != null)
 			return true;
 		return false;
@@ -121,8 +121,16 @@ public class ControlAlmacen {
 		return servicioalmacen.buscaProducto(codigo);
 	}
 
+	public boolean agregarProducto(Producto producto) {
+		return servicioalmacen.agregarProducto(producto);
+	}
+
 	public boolean eliminarProducto(Producto producto) {
 		return servicioalmacen.eliminarProducto(producto);
+	}
+
+	public int generaCodigo() {
+		return servicioalmacen.cantidadProductos() + 1;
 	}
 
 	public void cargarDatosProductos() {
@@ -140,11 +148,17 @@ public class ControlAlmacen {
 	}
 
 	public boolean esNumero(String num) {
+		int puntos = 0, tam = num.length();
 		if (num.isEmpty())
 			return false;
 		for (Character c : num.toCharArray())
 			if (!Character.isDigit(c))
-				return false;
+				if (c.equals('.') && tam > 1) {
+					if (puntos > 0)
+						return false;
+					puntos++;
+				} else
+					return false;
 		return true;
 	}
 

@@ -1,7 +1,6 @@
 package Presentacion;
 
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -13,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Modelo.Componentes;
 import Modelo.Usuario;
 import Negocio.ControlAlmacen;
 import Negocio.ControlLogin;
@@ -21,15 +21,14 @@ import Negocio.ControlVendedores;
 @SuppressWarnings("serial")
 public class VistaAdministrador extends JFrame {
 
+	// Variables Globales
 	private JButton vendedores, almacen, comiciones, cerrarsesion;
 	private JLabel nombre, correo, telefono;
 	private ControlVendedores control;
 	private ControlLogin controllogin;
 	private ControlAlmacen controlalmacen;
 
-	/**
-	 * Launch the application.
-	 */
+	// Muestra Solo la Presentacion de la Vista
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,7 +42,9 @@ public class VistaAdministrador extends JFrame {
 		});
 	}
 
+	// Constructor de la Ventana VistaAdministrador
 	public VistaAdministrador() {
+		// Propiedades de la Ventana
 		setSize(500, 320);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -66,17 +67,20 @@ public class VistaAdministrador extends JFrame {
 		});
 	}
 
+	// Creamos y Agregamos los Componetes de la Ventana
 	private void iniciarComponentes() {
 		// creamos el panel y lo agregamos a la ventana
 		JPanel panel = new JPanel(null);
-		setContentPane(panel);
+		Componentes componente = new Componentes();
 		JLabel titulo;
 
+		setContentPane(panel);
+
 		// Creamos y Agregamos las Propiedades del Método creaBoton para Cada Boton
-		vendedores = creaBoton("Vendedores", 360, 100, 120, 30);
-		almacen = creaBoton("Almacen", 360, 150, 120, 30);
-		comiciones = creaBoton("Comiciones", 360, 200, 120, 30);
-		cerrarsesion = creaBoton("Cerrar Sesión", 20, 240, 140, 30);
+		vendedores = componente.creaBoton("Vendedores", 360, 100, 120, 30);
+		almacen = componente.creaBoton("Almacen", 360, 150, 120, 30);
+		comiciones = componente.creaBoton("Comiciones", 360, 200, 120, 30);
+		cerrarsesion = componente.creaBoton("Cerrar Sesión", 20, 240, 140, 30);
 		vendedores.setToolTipText("Accesar a los Vendedores (Agregar, Consultar, Eliminar, Listar)");
 		almacen.setToolTipText("Accesar al Almacen de Productos (Agregar, Consultar, Eliminar, Listar)");
 		comiciones.setToolTipText("Accesar a las Comiciones (Asignar, Consultar,Modificar, Listar)");
@@ -84,13 +88,14 @@ public class VistaAdministrador extends JFrame {
 
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de las Etiquetas
 		// Como de la Letra
-		titulo = creaEtiqueta("Menú Administrador", 120, 40, 280, 28, 28);
-		nombre = creaEtiqueta("Nombre", 20, 100, 300, 50, 16);
-		correo = creaEtiqueta("Correo", 20, 140, 300, 50, 16);
-		telefono = creaEtiqueta("Telefono", 20, 180, 300, 50, 16);
+		titulo = componente.creaEtiqueta("Menú Administrador", 120, 40, 280, 28, 28);
+		nombre = componente.creaEtiqueta("Nombre", 20, 100, 300, 50, 16);
+		correo = componente.creaEtiqueta("Correo", 20, 140, 300, 50, 16);
+		telefono = componente.creaEtiqueta("Telefono", 20, 180, 300, 50, 16);
 
 		// Se Realiza Acciones de los Componentes
 		accionesComponentes();
+
 		// Agregamos los Componentes al Panel
 		panel.add(titulo);
 		panel.add(nombre);
@@ -100,22 +105,6 @@ public class VistaAdministrador extends JFrame {
 		panel.add(almacen);
 		panel.add(comiciones);
 		panel.add(cerrarsesion);
-	}
-
-	// Método Para Crear las Propiedades del boton
-	private JButton creaBoton(String nombre, int posx, int posy, int ancho, int alto) {
-		JButton boton = new JButton(nombre);
-		boton.setBounds(posx, posy, ancho, alto);
-		boton.setFont(new Font("Serif", Font.ITALIC, 14));
-		return boton;
-	}
-
-	// Método Para Crear las Propiedades de las Etiquetas
-	private JLabel creaEtiqueta(String nombre, int posx, int posy, int ancho, int alto, int tamaño) {
-		JLabel etiqueta = new JLabel(nombre);
-		etiqueta.setBounds(posx, posy, ancho, alto);
-		etiqueta.setFont(new Font("Serif", Font.ITALIC, tamaño));
-		return etiqueta;
 	}
 
 	// Método para Crear las Acciones de Los Componentes
@@ -159,18 +148,22 @@ public class VistaAdministrador extends JFrame {
 		});
 	}
 
+	// Obtenemos la Instancia del Control Vendedores
 	public void setControl(ControlVendedores control) {
 		this.control = control;
 	}
 
+	// Obtenemos la Instancia del Control Login
 	public void setControl(ControlLogin controllogin) {
 		this.controllogin = controllogin;
 	}
-	
+
+	// Obtenemos la Instancia del Control Almacen
 	public void setControl(ControlAlmacen controlalmacen) {
 		this.controlalmacen = controlalmacen;
 	}
 
+	// Se Obtiene los Datos del Usuario Ingresado
 	public void actualizarDatos(Usuario user) {
 		this.nombre.setText(user.getNombre());
 		this.correo.setText(user.getCorreo());

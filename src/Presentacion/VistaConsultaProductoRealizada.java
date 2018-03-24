@@ -154,7 +154,7 @@ public class VistaConsultaProductoRealizada extends JFrame {
 		nueva.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//control.muestraVistaConsultarVendedor();
+				control.muestraVistaConsultaProducto();
 				control.limpiarDatos("Consultar");
 				dispose();
 			}
@@ -183,5 +183,4 @@ public class VistaConsultaProductoRealizada extends JFrame {
 	public void setControl(ControlAlmacen controlalmacen) {
 		this.control = controlalmacen;
 	}
-
 }

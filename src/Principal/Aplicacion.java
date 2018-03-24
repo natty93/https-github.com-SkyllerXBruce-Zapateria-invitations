@@ -33,7 +33,6 @@ public class Aplicacion {
 
 	// Este metodo crea el objeto incial
 	public static void main(String[] args) {
-		// Crea la instancia de la aplicacion
 		Aplicacion app = new Aplicacion();
 		app.inicia(); // La inicia
 	}
@@ -45,7 +44,7 @@ public class Aplicacion {
 
 	// Inicia la Aplicacion
 	public void inicia() {
-		// Declaramos las clases e instanciamos las clases(crear objetos de clases)
+		// Declaramos e instanciamos las clases de las Vistas
 		VistaAdministarVendedores vistaadminvendedores = new VistaAdministarVendedores();
 		VistaAdministrador vistaadmin = new VistaAdministrador();
 		VistaAgregarProducto vistaaddproducto = new VistaAgregarProducto();
@@ -54,30 +53,32 @@ public class Aplicacion {
 		VistaAlmacen vistaalmacen = new VistaAlmacen();
 		VistaCambioCalzado vistacambio = new VistaCambioCalzado();
 		VistaConsultaProducto vistaconsultaproducto = new VistaConsultaProducto();
-		VistaConsultaProductoRealizada vistaconsultaproductorealizada =new VistaConsultaProductoRealizada();
+		VistaConsultaProductoRealizada vistaconsultaproductorealizada = new VistaConsultaProductoRealizada();
 		VistaConsultaRealizada vistaconsultarealizada = new VistaConsultaRealizada();
 		VistaConsultarVendedor vistaconsultavendedor = new VistaConsultarVendedor();
 		VistaEliminarProducto vistadelproducto = new VistaEliminarProducto();
 		VistaEliminarVendedor vistadelvendedor = new VistaEliminarVendedor();
 		VistaLogin vistalogin = new VistaLogin();
-		VistaMostrarProductos vistamostrarproductos=new VistaMostrarProductos();
+		VistaMostrarProductos vistamostrarproductos = new VistaMostrarProductos();
 		VistaMostrarVendedores vistamostrarvendedores = new VistaMostrarVendedores();
 		VistaTicket vistaticket = new VistaTicket();
 		VistaVendedor vistavendedor = new VistaVendedor();
 		VistaVentaCalzado vistavendedorcalzado = new VistaVentaCalzado();
 
+		// Declaramos e instanciamos las clases de Control
 		ControlAlmacen controlalmacen = new ControlAlmacen();
 		ControlLogin controllogin = new ControlLogin();
 		ControlVendedores controlvendedores = new ControlVendedores();
 		ControlVenta controlventa = new ControlVenta();
 
+		// Declaramos e instanciamos las clases de Servicio
 		ServicioAlmacen servicioalmacen = new ServicioAlmacen();
 		ServicioLogin serviciologin = new ServicioLogin();
 		ServicioTicket servicioticket = new ServicioTicket();
 		ServicioVendedores serviciovendedores = new ServicioVendedores();
 		ServicioVenta servicioventa = new ServicioVenta();
 
-		// Establecemos las relaciones entre clases
+		// Mandamos el Control Correspondiente a las vistas
 		vistaadmin.setControl(controlvendedores);
 		vistaadmin.setControl(controllogin);
 		vistaadmin.setControl(controlalmacen);
@@ -100,17 +101,19 @@ public class Aplicacion {
 		vistavendedor.setControl(controlventa);
 		vistavendedorcalzado.setControl(controlventa);
 
+		// Mandamos el Control Correspondiente a los Servicios
 		serviciologin.setControl(controllogin);
 		servicioticket.setControl(controlventa);
 		serviciovendedores.setControl(controlvendedores);
 		servicioventa.setControl(controlventa);
 
-		// Enviamos una instancia de cada clase al control
+		// Mandamos al Control Login las Vistas y el Servicion Correspondiente
 		controllogin.setServicioLogin(serviciologin);
 		controllogin.setVistaAdministrador(vistaadmin);
 		controllogin.setVistaLogin(vistalogin);
 		controllogin.setVistaVendedor(vistavendedor);
 
+		// Mandamos al Control Venta las Vistas y los Servicion Correspondiente
 		controlventa.setServicioAlmacen(servicioalmacen);
 		controlventa.setServicioLogin(serviciologin);
 		controlventa.setServicioTicket(servicioticket);
@@ -121,6 +124,7 @@ public class Aplicacion {
 		controlventa.setVistaVendedor(vistavendedor);
 		controlventa.setVistaVentaCalzado(vistavendedorcalzado);
 
+		// Mandamos al Control Vendedor las Vistas y el Servicion Correspondiente
 		controlvendedores.setServicioVendedores(serviciovendedores);
 		controlvendedores.setVistaAdministarVendedores(vistaadminvendedores);
 		controlvendedores.setVistaAdministrador(vistaadmin);
@@ -131,6 +135,7 @@ public class Aplicacion {
 		controlvendedores.setVistaEliminarVendedor(vistadelvendedor);
 		controlvendedores.setVistaMostrarVendedores(vistamostrarvendedores);
 
+		// Mandamos al Control Almacen las Vistas y el Servicion Correspondiente
 		controlalmacen.setServicioAlmacen(servicioalmacen);
 		controlalmacen.setVistaAdministrador(vistaadmin);
 		controlalmacen.setVistaAgregarProducto(vistaaddproducto);
