@@ -1,7 +1,6 @@
 package Presentacion;
 
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,12 +14,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Modelo.Componentes;
 import Negocio.ControlVendedores;
 
 @SuppressWarnings("serial")
 public class VistaAdministarVendedores extends JFrame {
 
-	// Variable Global
+	// Variable Globales
 	private JButton agregar, eliminar, consultar, listar, regresar;
 	private ControlVendedores control;
 
@@ -67,8 +67,10 @@ public class VistaAdministarVendedores extends JFrame {
 	private void iniciarComponentes() {
 		// creamos el panel y lo agregamos a la ventana
 		JPanel panel = new JPanel(null);
-		setContentPane(panel);
+		Componentes componente = new Componentes();
 		JLabel titulo;
+		
+		setContentPane(panel);
 		
 		// Imagen del Boton regresar
 		ImageIcon imgIcon = new ImageIcon(VistaAdministarVendedores.class.getResource("return.png"));
@@ -77,11 +79,11 @@ public class VistaAdministarVendedores extends JFrame {
 		imgIcon = new ImageIcon(userScaled);
 
 		// Creamos y Agregamos las Propiedades del Método creaBoton para Cada Boton
-		agregar = creaBoton("Agregar Vendedor", 40, 100, 180, 30);
-		eliminar = creaBoton("Eliminar Vendedor", 40, 150, 180, 30);
-		consultar = creaBoton("Consultar Vendedor", 260, 100, 180, 30);
-		listar = creaBoton("Listar Vendedores", 260, 150, 180, 30);
-		regresar = creaBoton("", 20, 200, 50, 50);
+		agregar = componente.creaBoton("Agregar Vendedor", 40, 100, 180, 30);
+		eliminar = componente.creaBoton("Eliminar Vendedor", 40, 150, 180, 30);
+		consultar = componente.creaBoton("Consultar Vendedor", 260, 100, 180, 30);
+		listar = componente.creaBoton("Listar Vendedores", 260, 150, 180, 30);
+		regresar = componente.creaBoton("", 20, 200, 50, 50);
 		regresar.setIcon(imgIcon);
 		agregar.setToolTipText("Agrega a un Vendedor");
 		eliminar.setToolTipText("Elimina a un Vendedor");
@@ -91,7 +93,7 @@ public class VistaAdministarVendedores extends JFrame {
 
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de las Etiquetas
 		// Como de la Letra
-		titulo = creaEtiqueta("Administrar Vendedores", 80, 40, 340, 28, 28);
+		titulo = componente.creaEtiqueta("Administrar Vendedores", 80, 40, 340, 28, 28);
 
 		// Se Realiza Acciones de los Componentes
 		accionesComponentes();
@@ -103,22 +105,6 @@ public class VistaAdministarVendedores extends JFrame {
 		panel.add(consultar);
 		panel.add(regresar);
 		panel.add(listar);
-	}
-
-	// Método Para Crear las Propiedades del boton
-	private JButton creaBoton(String nombre, int posx, int posy, int ancho, int alto) {
-		JButton boton = new JButton(nombre);
-		boton.setBounds(posx, posy, ancho, alto);
-		boton.setFont(new Font("Serif", Font.ITALIC, 14));
-		return boton;
-	}
-
-	// Método Para Crear las Propiedades de las Etiquetas
-	private JLabel creaEtiqueta(String nombre, int posx, int posy, int ancho, int alto, int tamaño) {
-		JLabel etiqueta = new JLabel(nombre);
-		etiqueta.setBounds(posx, posy, ancho, alto);
-		etiqueta.setFont(new Font("Serif", Font.ITALIC, tamaño));
-		return etiqueta;
 	}
 
 	// Método para Crear las Acciones de Los Componentes

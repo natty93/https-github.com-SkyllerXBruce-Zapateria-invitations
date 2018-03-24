@@ -1,7 +1,6 @@
 package Presentacion;
 
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,6 +12,7 @@ import javax.swing.JPanel;
 import Negocio.ControlAlmacen;
 import javax.swing.JTextField;
 
+import Modelo.Componentes;
 import Modelo.Producto;
 
 import javax.swing.JLabel;
@@ -23,13 +23,12 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class VistaAgregarProducto extends JFrame {
 
+	// Variables Globales
 	private JButton agregar, regresa;
 	private JTextField tmodelo, ttipo, tcolor, tcosto, ttalla, tcantidad;
 	private ControlAlmacen control;
 
-	/**
-	 * Launch the application.
-	 */
+	// Muestra Solo la Presentacion de la Vista
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,8 +42,9 @@ public class VistaAgregarProducto extends JFrame {
 		});
 	}
 
+	// Constructor de la Ventana VistaAgregarProducto
 	public VistaAgregarProducto() {
-		// Tamaño de la Ventana
+		// Propiedades de la Ventana
 		setSize(480, 460);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -68,33 +68,37 @@ public class VistaAgregarProducto extends JFrame {
 		});
 	}
 
+	// Creamos y Agregamos los Componetes de la Ventana
 	private void iniciarComponentes() {
 		// creamos el panel y lo agregamos a la ventana
 		JPanel panel = new JPanel(null);
-		setContentPane(panel);
 		JLabel titulo, modelo, tipo, color, costo, talla, cantidad;
+		Componentes componente = new Componentes();
+		
+		setContentPane(panel);
 
+		// Imagen del Boton regresar
 		ImageIcon imgIcon = new ImageIcon(VistaAgregarProducto.class.getResource("return.png"));
 		Image user = imgIcon.getImage();
 		Image userScaled = user.getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
 		imgIcon = new ImageIcon(userScaled);
 
 		// Creamos y Agregamos las Propiedades del Método creaBoton para Cada Boton
-		agregar = creaBoton("Agregar", 260, 380, 150, 30);
-		regresa = creaBoton("", 40, 370, 50, 50);
+		agregar = componente.creaBoton("Agregar", 260, 380, 150, 30);
+		regresa = componente.creaBoton("", 40, 370, 50, 50);
 		regresa.setIcon(imgIcon);
 		agregar.setToolTipText("Agrega los Datos del Producto");
 		regresa.setToolTipText("Cancela la Operacion y Regresa a la Ventana de Administrar Almacen");
 
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de las Etiquetas
 		// Como de la Letra
-		titulo = creaEtiqueta("Agregar Producto", 120, 40, 340, 35, 30);
-		modelo = creaEtiqueta("Modelo:", 40, 120, 140, 25, 16);
-		tipo = creaEtiqueta("Tipo:", 40, 160, 140, 25, 16);
-		color = creaEtiqueta("Color:", 40, 200, 140, 25, 16);
-		costo = creaEtiqueta("Costo:", 40, 240, 140, 25, 16);
-		talla = creaEtiqueta("Talla:", 40, 280, 140, 25, 16);
-		cantidad = creaEtiqueta("Cantidad:", 40, 320, 140, 25, 16);
+		titulo = componente.creaEtiqueta("Agregar Producto", 120, 40, 340, 35, 30);
+		modelo = componente.creaEtiqueta("Modelo:", 40, 120, 140, 25, 16);
+		tipo = componente.creaEtiqueta("Tipo:", 40, 160, 140, 25, 16);
+		color = componente.creaEtiqueta("Color:", 40, 200, 140, 25, 16);
+		costo = componente.creaEtiqueta("Costo:", 40, 240, 140, 25, 16);
+		talla = componente.creaEtiqueta("Talla:", 40, 280, 140, 25, 16);
+		cantidad = componente.creaEtiqueta("Cantidad:", 40, 320, 140, 25, 16);
 		modelo.setToolTipText("Ingrese el Modelo del Producto");
 		tipo.setToolTipText("Ingrese de que Tipo es el Producto");
 		color.setToolTipText("Ingrese el Color del Producto");
@@ -104,12 +108,12 @@ public class VistaAgregarProducto extends JFrame {
 
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de los TextFields
 		// Como de la Letra
-		tmodelo = creaCuadroTexto(190, 120, 270, 25, 14);
-		ttipo = creaCuadroTexto(190, 160, 270, 25, 14);
-		tcolor = creaCuadroTexto(190, 200, 270, 25, 14);
-		tcosto = creaCuadroTexto(190, 240, 270, 25, 14);
-		ttalla = creaCuadroTexto(190, 280, 270, 25, 14);
-		tcantidad = creaCuadroTexto(190, 320, 270, 25, 14);
+		tmodelo = componente.creaCuadroTexto(190, 120, 270, 25, 14);
+		ttipo = componente.creaCuadroTexto(190, 160, 270, 25, 14);
+		tcolor = componente.creaCuadroTexto(190, 200, 270, 25, 14);
+		tcosto = componente.creaCuadroTexto(190, 240, 270, 25, 14);
+		ttalla = componente.creaCuadroTexto(190, 280, 270, 25, 14);
+		tcantidad = componente.creaCuadroTexto(190, 320, 270, 25, 14);
 		tmodelo.setToolTipText("Ingrese el Modelo del Producto");
 		ttipo.setToolTipText("Ingrese de que Tipo es el Producto");
 		tcolor.setToolTipText("Ingrese el Color del Producto");
@@ -119,6 +123,7 @@ public class VistaAgregarProducto extends JFrame {
 
 		// Se Realiza Acciones de los Componentes
 		accionesComponentes();
+		
 		// Agregamos los Componentes al Panel
 		panel.add(titulo);
 		panel.add(modelo);
@@ -135,32 +140,6 @@ public class VistaAgregarProducto extends JFrame {
 		panel.add(tcantidad);
 		panel.add(agregar);
 		panel.add(regresa);
-
-	}
-
-	// Método Para Crear las Propiedades del boton
-	private JButton creaBoton(String nombre, int posx, int posy, int ancho, int alto) {
-		JButton boton = new JButton(nombre);
-		boton.setBounds(posx, posy, ancho, alto);
-		boton.setFont(new Font("Serif", Font.ITALIC, 14));
-		return boton;
-	}
-
-	// Método Para Crear las Propiedades de las Etiquetas
-	private JLabel creaEtiqueta(String nombre, int posx, int posy, int ancho, int alto, int tamaño) {
-		JLabel etiqueta = new JLabel(nombre);
-		etiqueta.setBounds(posx, posy, ancho, alto);
-		etiqueta.setFont(new Font("Serif", Font.ITALIC, tamaño));
-		return etiqueta;
-	}
-
-	// Método Para Crear las Propiedades de los Cuadros de Texto
-	private JTextField creaCuadroTexto(int posx, int posy, int ancho, int alto, int tamaño) {
-		JTextField texto = new JTextField();
-		texto.setBounds(posx, posy, ancho, alto);
-		texto.setFont(new Font("Serif", Font.ITALIC, tamaño));
-		texto.setText("");
-		return texto;
 	}
 
 	// Método para Crear las Acciones de Los Componentes
@@ -229,6 +208,7 @@ public class VistaAgregarProducto extends JFrame {
 		});
 	}
 
+	// Metodo que limpia los TextFields
 	public void limpiarDatosAgregarProducto() {
 		tmodelo.setText("");
 		ttipo.setText("");
@@ -238,6 +218,7 @@ public class VistaAgregarProducto extends JFrame {
 		tcantidad.setText("");
 	}
 
+	// Obtenemos la Instancia del Control Almacen
 	public void setControl(ControlAlmacen controlalmacen) {
 		this.control = controlalmacen;
 	}

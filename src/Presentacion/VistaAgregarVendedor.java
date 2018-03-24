@@ -1,7 +1,6 @@
 package Presentacion;
 
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Modelo.Componentes;
 import Negocio.ControlVendedores;
 
 @SuppressWarnings("serial")
@@ -70,8 +70,10 @@ public class VistaAgregarVendedor extends JFrame {
 	private void iniciarComponentes() {
 		// creamos el panel y lo agregamos a la ventana
 		JPanel panel = new JPanel(null);
-		setContentPane(panel);
+		Componentes componente = new Componentes();
 		JLabel titulo, nombre, apaterno, amaterno, curp, correo, telefono;
+
+		setContentPane(panel);
 
 		// Imagen del Boton regresar
 		ImageIcon imgIcon = new ImageIcon(VistaAgregarVendedor.class.getResource("return.png"));
@@ -80,21 +82,21 @@ public class VistaAgregarVendedor extends JFrame {
 		imgIcon = new ImageIcon(userScaled);
 
 		// Creamos y Agregamos las Propiedades del Método creaBoton para Cada Boton
-		ingresar = creaBoton("Ingresar", 260, 380, 150, 30);
-		regresar = creaBoton("", 40, 360, 50, 50);
+		ingresar = componente.creaBoton("Ingresar", 260, 380, 150, 30);
+		regresar = componente.creaBoton("", 40, 360, 50, 50);
 		regresar.setIcon(imgIcon);
 		ingresar.setToolTipText("Agrega los Datos del Vendedor");
 		regresar.setToolTipText("Cancela la Operacion y Regresa a la Ventana de Administrar Vendedores");
 
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de las Etiquetas
 		// Como de la Letra
-		titulo = creaEtiqueta("Agregar Vendedor", 120, 40, 340, 35, 30);
-		nombre = creaEtiqueta("Nombre:", 40, 120, 140, 25, 16);
-		apaterno = creaEtiqueta("Apellido Paterno:", 40, 160, 140, 25, 16);
-		amaterno = creaEtiqueta("Apellido Materno:", 40, 200, 140, 25, 16);
-		curp = creaEtiqueta("Curp:", 40, 240, 140, 25, 16);
-		correo = creaEtiqueta("Correo:", 40, 280, 140, 25, 16);
-		telefono = creaEtiqueta("Telefono:", 40, 320, 140, 25, 16);
+		titulo = componente.creaEtiqueta("Agregar Vendedor", 120, 40, 340, 35, 30);
+		nombre = componente.creaEtiqueta("Nombre:", 40, 120, 140, 25, 16);
+		apaterno = componente.creaEtiqueta("Apellido Paterno:", 40, 160, 140, 25, 16);
+		amaterno = componente.creaEtiqueta("Apellido Materno:", 40, 200, 140, 25, 16);
+		curp = componente.creaEtiqueta("Curp:", 40, 240, 140, 25, 16);
+		correo = componente.creaEtiqueta("Correo:", 40, 280, 140, 25, 16);
+		telefono = componente.creaEtiqueta("Telefono:", 40, 320, 140, 25, 16);
 		nombre.setToolTipText("Ingrese Nombre del Vendedor");
 		apaterno.setToolTipText("Ingrese Apellido Paterno del Vendedor");
 		apaterno.setToolTipText("Ingrese Apellido Materno del Vendedor");
@@ -104,12 +106,12 @@ public class VistaAgregarVendedor extends JFrame {
 
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de los TextFields
 		// Como de la Letra
-		tnombre = creaCuadroTexto(190, 120, 270, 25, 14);
-		tapaterno = creaCuadroTexto(190, 160, 270, 25, 14);
-		tamaterno = creaCuadroTexto(190, 200, 270, 25, 14);
-		tcurp = creaCuadroTexto(190, 240, 270, 25, 14);
-		tcorreo = creaCuadroTexto(190, 280, 270, 25, 14);
-		ttelefono = creaCuadroTexto(190, 320, 270, 25, 14);
+		tnombre = componente.creaCuadroTexto(190, 120, 270, 25, 14);
+		tapaterno = componente.creaCuadroTexto(190, 160, 270, 25, 14);
+		tamaterno = componente.creaCuadroTexto(190, 200, 270, 25, 14);
+		tcurp = componente.creaCuadroTexto(190, 240, 270, 25, 14);
+		tcorreo = componente.creaCuadroTexto(190, 280, 270, 25, 14);
+		ttelefono = componente.creaCuadroTexto(190, 320, 270, 25, 14);
 		tnombre.setToolTipText("Ingrese Nombre del Vendedor");
 		tapaterno.setToolTipText("Ingrese Apellido Paterno del Vendedor");
 		tapaterno.setToolTipText("Ingrese Apellido Materno del Vendedor");
@@ -119,7 +121,7 @@ public class VistaAgregarVendedor extends JFrame {
 
 		// Se Realiza Acciones de los Componentes
 		accionesComponentes();
-		
+
 		// Agregamos los Componentes al Panel
 		panel.add(titulo);
 		panel.add(nombre);
@@ -136,31 +138,6 @@ public class VistaAgregarVendedor extends JFrame {
 		panel.add(ttelefono);
 		panel.add(ingresar);
 		panel.add(regresar);
-	}
-
-	// Método Para Crear las Propiedades del boton
-	private JButton creaBoton(String nombre, int posx, int posy, int ancho, int alto) {
-		JButton boton = new JButton(nombre);
-		boton.setBounds(posx, posy, ancho, alto);
-		boton.setFont(new Font("Serif", Font.ITALIC, 14));
-		return boton;
-	}
-
-	// Método Para Crear las Propiedades de las Etiquetas
-	private JLabel creaEtiqueta(String nombre, int posx, int posy, int ancho, int alto, int tamaño) {
-		JLabel etiqueta = new JLabel(nombre);
-		etiqueta.setBounds(posx, posy, ancho, alto);
-		etiqueta.setFont(new Font("Serif", Font.ITALIC, tamaño));
-		return etiqueta;
-	}
-
-	// Método Para Crear las Propiedades de los Cuadros de Texto
-	private JTextField creaCuadroTexto(int posx, int posy, int ancho, int alto, int tamaño) {
-		JTextField texto = new JTextField();
-		texto.setBounds(posx, posy, ancho, alto);
-		texto.setFont(new Font("Serif", Font.ITALIC, tamaño));
-		texto.setText("");
-		return texto;
 	}
 
 	// Método para Crear las Acciones de Los Componentes

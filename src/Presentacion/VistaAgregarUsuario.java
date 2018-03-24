@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import Modelo.Componentes;
 import Modelo.Usuario;
 import Negocio.ControlVendedores;
 
@@ -29,7 +30,7 @@ public class VistaAgregarUsuario extends JFrame {
 	private JPasswordField tcontrasena;
 	private String[] datosVendedor;
 	private ControlVendedores control;
-	
+
 	// Muestra Solo la Presentacion de la Vista
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -75,9 +76,11 @@ public class VistaAgregarUsuario extends JFrame {
 	private void iniciarComponentes() {
 		// creamos el panel y lo agregamos a la ventana
 		JPanel panel = new JPanel(null);
+		Componentes componente = new Componentes();
 		JLabel titulo1, titulo2, usuario, contrasena;
-		setContentPane(panel);
 		
+		setContentPane(panel);
+
 		// Imagen del Boton regresar
 		ImageIcon imgIcon = new ImageIcon(VistaAgregarUsuario.class.getResource("return.png"));
 		Image user = imgIcon.getImage();
@@ -85,24 +88,24 @@ public class VistaAgregarUsuario extends JFrame {
 		imgIcon = new ImageIcon(userScaled);
 
 		// Creamos y Agregamos las Propiedades del Método creaBoton para Cada Boton
-		agregar = creaBoton("Agregar", 260, 240, 150, 30);
-		regresar = creaBoton("", 40, 230, 50, 50);
+		agregar = componente.creaBoton("Agregar", 260, 240, 150, 30);
+		regresar = componente.creaBoton("", 40, 230, 50, 50);
 		regresar.setIcon(imgIcon);
 		agregar.setToolTipText("Agrega Usuario y Contraseña del Vendedor");
 		regresar.setToolTipText("Regresa a la Ventana de Agregar Vendedor");
-		
+
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de las Etiquetas
 		// Como de la Letra
-		titulo1 = creaEtiqueta("Asignar Usuario y Cotraseña", 30, 40, 480, 35, 30);
-		titulo2 = creaEtiqueta("al Vendedor", 130, 70, 480, 35, 30);
-		usuario = creaEtiqueta("Usuario:", 40, 140, 140, 25, 16);
-		contrasena = creaEtiqueta("Contraseña:", 40, 180, 140, 25, 16);
+		titulo1 = componente.creaEtiqueta("Asignar Usuario y Cotraseña", 30, 40, 480, 35, 30);
+		titulo2 = componente.creaEtiqueta("al Vendedor", 130, 70, 480, 35, 30);
+		usuario = componente.creaEtiqueta("Usuario:", 40, 140, 140, 25, 16);
+		contrasena = componente.creaEtiqueta("Contraseña:", 40, 180, 140, 25, 16);
 		usuario.setToolTipText("Ingrese un Usuario");
 		contrasena.setToolTipText("Ingrese una Contraseña");
 
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de los TextFields
 		// Como de la Letra
-		tusuario = creaCuadroTexto(190, 140, 270, 25, 14);
+		tusuario = componente.creaCuadroTexto(190, 140, 270, 25, 14);
 		tusuario.setToolTipText("Ingrese un Usuario");
 
 		// Se Modifica la Posicion, Tipo de Letra y su Tamaño Tanto de los PasswordField
@@ -124,31 +127,6 @@ public class VistaAgregarUsuario extends JFrame {
 		panel.add(tcontrasena);
 		panel.add(agregar);
 		panel.add(regresar);
-	}
-
-	// Método Para Crear las Propiedades del boton
-	private JButton creaBoton(String nombre, int posx, int posy, int ancho, int alto) {
-		JButton boton = new JButton(nombre);
-		boton.setBounds(posx, posy, ancho, alto);
-		boton.setFont(new Font("Serif", Font.ITALIC, 14));
-		return boton;
-	}
-
-	// Método Para Crear las Propiedades de las Etiquetas
-	private JLabel creaEtiqueta(String nombre, int posx, int posy, int ancho, int alto, int tamaño) {
-		JLabel etiqueta = new JLabel(nombre);
-		etiqueta.setBounds(posx, posy, ancho, alto);
-		etiqueta.setFont(new Font("Serif", Font.ITALIC, tamaño));
-		return etiqueta;
-	}
-
-	// Método Para Crear las Propiedades de los Cuadros de Texto
-	private JTextField creaCuadroTexto(int posx, int posy, int ancho, int alto, int tamaño) {
-		JTextField texto = new JTextField();
-		texto.setBounds(posx, posy, ancho, alto);
-		texto.setFont(new Font("Serif", Font.ITALIC, tamaño));
-		texto.setText("");
-		return texto;
 	}
 
 	// Método para Crear las Acciones de Los Componentes
