@@ -1,7 +1,6 @@
 package Presentacion;
 
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
