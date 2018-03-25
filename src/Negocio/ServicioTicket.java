@@ -59,6 +59,14 @@ public class ServicioTicket {
 		return vendidos;
 	}
 	
+	public double obtenerGananciasVendedor(Usuario user) {
+		double ganancias = 0;
+		for (Ticket t : daoticket.dameTickets())
+			if (user.getId().equals(t.getIdvendedor()))
+				ganancias += t.getTotal();
+		return ganancias;
+	}
+	
 	// Este método nos permite obtener la fecha, para pasarla al ticket impreso.
 	public String getFechaActual() {
 		Date ahora = new Date();

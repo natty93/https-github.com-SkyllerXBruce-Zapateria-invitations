@@ -134,6 +134,14 @@ public class VistaBalanceGeneral extends JFrame {
 		});
 	}
 
+	public void obtenDatosBalanceGeneral(int vendidos, double comicion, double ganancia) {
+		double total = ganancia - comicion;
+		lblvendidos.setText(String.valueOf(vendidos));
+		lblganancias.setText(String.format("%.2f", ganancia));
+		lblcomiciones.setText(String.format("%.2f", comicion));
+		lbltotal.setText(String.format("%.2f", total));
+	}
+
 	// Metodo que limpia los TextFields
 	public void limpiarDatosBalanceGeneral() {
 		lblvendidos.setText("");

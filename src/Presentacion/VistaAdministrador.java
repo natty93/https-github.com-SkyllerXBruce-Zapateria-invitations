@@ -131,7 +131,9 @@ public class VistaAdministrador extends JFrame {
 		balance.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Click en Comiciones");
+				control.obtenDatosBalanceGeneral();
+				control.muestraVistaBalanceGeneral();
+				dispose();
 			}
 		});
 

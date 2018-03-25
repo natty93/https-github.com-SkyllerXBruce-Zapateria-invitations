@@ -91,6 +91,7 @@ public class Aplicacion {
 		vistaadduser.setControl(controlvendedores);
 		vistaaddvendedor.setControl(controlvendedores);
 		vistaalmacen.setControl(controlalmacen);
+		vistabalancegeneral.setControl(controlvendedores);
 		vistacambio.setControl(controlventa);
 		vistacomiciones.setControl(controlventa);
 		vistaconsultaproducto.setControl(controlalmacen);
@@ -131,11 +132,13 @@ public class Aplicacion {
 		controlventa.setVistaVentaCalzado(vistavendedorcalzado);
 
 		// Mandamos al Control Vendedor las Vistas y el Servicion Correspondiente
+		controlvendedores.setServicioTicket(servicioticket);
 		controlvendedores.setServicioVendedores(serviciovendedores);
 		controlvendedores.setVistaAdministarVendedores(vistaadminvendedores);
 		controlvendedores.setVistaAdministrador(vistaadmin);
 		controlvendedores.setVistaAgregarUsuario(vistaadduser);
 		controlvendedores.setVistaAgregarVendedor(vistaaddvendedor);
+		controlvendedores.setVistaBalanceGeneral(vistabalancegeneral);
 		controlvendedores.setVistaConsultaRealizada(vistaconsultarealizada);
 		controlvendedores.setVistaConsultarVendedor(vistaconsultavendedor);
 		controlvendedores.setVistaEliminarVendedor(vistadelvendedor);
