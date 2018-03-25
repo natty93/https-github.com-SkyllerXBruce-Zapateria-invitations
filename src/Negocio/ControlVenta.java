@@ -228,8 +228,8 @@ public class ControlVenta implements Printable {
 
 	public boolean cambioProducto(int folio) {
 		int fila = -1;
-		String modelocambio, tipocambio;
-		double total = 0, iva = 0, diferencia = 0, tventa = 0;
+		String modelocambio, tipocambio, colorcambio;
+		double total = 0, iva = 0, diferencia = 0, tventa = 0, tallacambio = 0;
 		boolean seleccion;
 		for (int i = 0; i < vistacambio.getTablaModeloCambio().getRowCount(); i++) {
 			seleccion = (boolean) vistacambio.getTablaModeloCambio().getValueAt(i, 7);
@@ -239,25 +239,47 @@ public class ControlVenta implements Printable {
 		if (fila >= 0) {
 			modelocambio = (String) vistacambio.getTablaModeloCambio().getValueAt(fila, 0);
 			tipocambio = (String) vistacambio.getTablaModeloCambio().getValueAt(fila, 1);
-			Producto productocambio = servicioalmacen.buscaProducto(modelocambio, tipocambio);
+			colorcambio = (String) vistacambio.getTablaModeloCambio().getValueAt(fila, 2);
+			tallacambio = (double) vistacambio.getTablaModeloCambio().getValueAt(fila, 3);
+			Producto productocambio = servicioalmacen.buscaProducto(modelocambio, tipocambio, colorcambio, tallacambio);
 			Producto productoventa = servicioalmacen.buscaProducto(folio);
 			Usuario user = getVendedor();
 			total = (double) vistacambio.getTablaModeloCambio().getValueAt(fila, 5);
 			iva = productocambio.dameCosto() * 0.16;
-
 			if (JOptionPane.showConfirmDialog(null, "¿Realmente Desea Realizar el Cambio?", "¿Cambio?",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				productocambio.setCantidad(productocambio.dameCantidad() - 1);
-				if (servicioticket.modificaTicket(folio, servicioticket.getFechaActual(), user.getId(),
-						productocambio.dameCodigo(), total, iva)) {
-					productoventa.setCantidad(productoventa.dameCantidad() + 1);
-					tventa = (double) vistacambio.getTablaModeloVenta().getValueAt(0, 5);
-					diferencia = (productocambio.dameCosto() * 1.16) - tventa;
-					creaTicketCambio(folio, productocambio, iva, total, diferencia, tventa);
-					return true;
+				if (servicioalmacen.eliminarProducto(productocambio)) {
+					productocambio.setCantidad(productocambio.dameCantidad() - 1);
+					servicioalmacen.agregarProducto(productocambio);
+					if (servicioticket.modificaTicket(folio, servicioticket.getFechaActual(), user.getId(),
+							productocambio.dameCodigo(), total, iva)) {
+						if (servicioalmacen.eliminarProducto(productoventa)) {
+							productoventa.setCantidad(productoventa.dameCantidad() + 1);
+							servicioalmacen.agregarProducto(productoventa);
+							tventa = (double) vistacambio.getTablaModeloVenta().getValueAt(0, 5);
+							diferencia = (productocambio.dameCosto() * 1.16) - tventa;
+							creaTicketCambio(folio, productocambio, iva, total, diferencia, tventa);
+							return true;
+						} else {
+							servicioalmacen.eliminarProducto(productocambio);
+							productocambio.setCantidad(productocambio.dameCantidad() + 1);
+							servicioalmacen.agregarProducto(productocambio);
+							JOptionPane.showMessageDialog(null, "No Se Pudo Realizar el Cambio");
+							muestraVistaVendedor();
+							limpiarDatos("Cambio");
+						}
+					} else {
+						servicioalmacen.eliminarProducto(productocambio);
+						productocambio.setCantidad(productocambio.dameCantidad() + 1);
+						servicioalmacen.agregarProducto(productocambio);
+						JOptionPane.showMessageDialog(null, "No Se Pudo Realizar el Cambio");
+						muestraVistaVendedor();
+						limpiarDatos("Cambio");
+					}
 				} else {
-					productocambio.setCantidad(productocambio.dameCantidad() + 1);
 					JOptionPane.showMessageDialog(null, "No Se Pudo Realizar el Cambio");
+					muestraVistaVendedor();
+					limpiarDatos("Cambio");
 				}
 			}
 		} else
