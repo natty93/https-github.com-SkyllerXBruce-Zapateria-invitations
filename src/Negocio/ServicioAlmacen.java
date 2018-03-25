@@ -14,8 +14,8 @@ public class ServicioAlmacen {
 	public Producto buscaProducto(String modelo, String tipo) {
 		return dao.buscaProducto(modelo, tipo);
 	}
-	
-	public Producto buscaProducto(String modelo, String tipo,String color,double talla) {
+
+	public Producto buscaProducto(String modelo, String tipo, String color, double talla) {
 		return dao.buscaProducto(modelo, tipo, color, talla);
 	}
 

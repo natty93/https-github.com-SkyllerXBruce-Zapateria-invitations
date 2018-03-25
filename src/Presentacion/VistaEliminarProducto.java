@@ -171,15 +171,15 @@ public class VistaEliminarProducto extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (pormodelo) {
-					int productotalla = 0;
+					double productotalla = 0;
 					String productomodelo = tmodelo.getText();
 					String productotipo = ttipo.getText();
-					String productocolor = tcodigo.getText();
-					if (!tmodelo.getText().isEmpty())
-						if (!ttipo.getText().isEmpty())
-							if (!tcolor.getText().isEmpty()) {
+					String productocolor = tcolor.getText();
+					if (!productomodelo.isEmpty())
+						if (!productotipo.isEmpty())
+							if (!productocolor.isEmpty()) {
 								if (control.esNumero(ttalla.getText()))
-									productotalla = Integer.valueOf(ttalla.getText());
+									productotalla = Double.valueOf(ttalla.getText());
 								if (productotalla > 0)
 									if (control.existeProducto(productomodelo, productotipo, productocolor,
 											productotalla)) {

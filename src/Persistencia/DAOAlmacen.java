@@ -46,14 +46,14 @@ public class DAOAlmacen {
 			return true;
 	}
 
-	public Producto buscaProducto(String modelo, String tipo, String color, double Talla) {
+	public Producto buscaProducto(String modelo, String tipo, String color, double talla) {
 		Producto producto = null;
 		try {
 			// Crea el statement
 			Statement statement = ManejadorBD.dameConnection().createStatement();
 			// Recibe los resutados
 			ResultSet rs = statement.executeQuery("SELECT * FROM Almacen WHERE Modelo='" + modelo + "' AND Tipo='"
-					+ tipo + "' AND Color='" + color + "' AND Talla=" + Talla + "");
+					+ tipo + "' AND Color='" + color + "' AND Talla=" + talla);
 			if (rs.next()) {
 				// Crea una nueva instancia del objeto
 				producto = new Producto(rs.getInt("Codigo"), rs.getString("Modelo"), rs.getString("Tipo"),

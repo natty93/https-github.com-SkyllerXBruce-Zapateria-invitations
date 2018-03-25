@@ -318,11 +318,17 @@ public class ControlVenta implements Printable {
 	}
 
 	public boolean esNumero(String num) {
+		int puntos = 0, tam = num.length();
 		if (num.isEmpty())
 			return false;
 		for (Character c : num.toCharArray())
 			if (!Character.isDigit(c))
-				return false;
+				if (c.equals('.') && tam > 1) {
+					if (puntos > 0)
+						return false;
+					puntos++;
+				} else
+					return false;
 		return true;
 	}
 

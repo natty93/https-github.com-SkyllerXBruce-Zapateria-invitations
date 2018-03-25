@@ -174,15 +174,15 @@ public class VistaConsultaProducto extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (pormodelo) {
-					int productotalla = 0;
+					double productotalla = 0;
 					String productomodelo = tmodelo.getText();
 					String productotipo = ttipo.getText();
-					String productocolor = tcodigo.getText();
-					if (!tmodelo.getText().isEmpty())
-						if (!ttipo.getText().isEmpty())
-							if (!tcolor.getText().isEmpty()) {
+					String productocolor = tcolor.getText();
+					if (!productomodelo.isEmpty())
+						if (!productotipo.isEmpty())
+							if (!productocolor.isEmpty()) {
 								if (control.esNumero(ttalla.getText()))
-									productotalla = Integer.valueOf(ttalla.getText());
+									productotalla = Double.valueOf(ttalla.getText());
 								if (productotalla > 0)
 									if (control.existeProducto(productomodelo, productotipo, productocolor,
 											productotalla)) {
@@ -365,6 +365,6 @@ public class VistaConsultaProducto extends JFrame {
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.setColor(Color.LIGHT_GRAY);
-		g.drawLine(20, 280, 460, 280);
+		g.drawLine(20, 360, 460, 360);
 	}
 }
