@@ -13,6 +13,7 @@ import Modelo.Ticket;
 import Modelo.Usuario;
 import Presentacion.VistaAdministarVendedores;
 import Presentacion.VistaCambioCalzado;
+import Presentacion.VistaComiciones;
 import Presentacion.VistaLogin;
 import Presentacion.VistaTicket;
 import Presentacion.VistaVendedor;
@@ -26,6 +27,7 @@ public class ControlVenta implements Printable {
 	private VistaLogin vistalogin;
 	private VistaVendedor vistavendedor;
 	private VistaAdministarVendedores vistaadminvendedores;
+	private VistaComiciones vistacomiciones;
 	private ServicioVenta servicioventa;
 	private ServicioTicket servicioticket;
 	private ServicioAlmacen servicioalmacen;
@@ -73,6 +75,10 @@ public class ControlVenta implements Printable {
 	public void setVistaAdministarVendedores(VistaAdministarVendedores vistaadminvendedores) {
 		this.vistaadminvendedores = vistaadminvendedores;
 	}
+	
+	public void setVistaComiciones(VistaComiciones vistacomiciones) {
+		this.vistacomiciones = vistacomiciones;
+	}
 
 	// Mostramos Ventana de Venta de Calzado
 	public void muestraVistaAdministarVendedores() {
@@ -96,6 +102,10 @@ public class ControlVenta implements Printable {
 	//
 	public void muestraVistaVendedor() {
 		vistavendedor.setVisible(true);
+	}
+	
+	public void muestraVistaComiciones() {
+		vistacomiciones.setVisible(true);
 	}
 
 	// Agregamos Vista ticket
@@ -191,6 +201,8 @@ public class ControlVenta implements Printable {
 			vistacambio.setFolioventa("");
 			for (int i = vistacambio.getTablaModeloCambio().getRowCount() - 1; i >= 0; i--)
 				vistacambio.getTablaModeloCambio().removeRow(i);
+		} else if (tipo.equals("Comicion")) {
+			vistacomiciones.limpiarDatosComiciones();
 		}
 	}
 
@@ -308,6 +320,13 @@ public class ControlVenta implements Printable {
 			servicioticket.agregaTicket(ticket);
 		} else
 			JOptionPane.showMessageDialog(null, "No hay Productos Disponibles");
+	}
+	
+	public void obtenDatosComiciones() {
+		Usuario user = getVendedor();
+		double comicion= servicioticket.obtenerComicionVendedor(user);
+		int vendidos = servicioticket.obtenerCantidadVentasVendedor(user);
+		vistacomiciones.obtenDatosComicion(user.getNombre(),comicion,vendidos);
 	}
 
 	// Este método imprime el ticket.

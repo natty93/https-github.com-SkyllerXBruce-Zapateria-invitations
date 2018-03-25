@@ -15,7 +15,9 @@ import Presentacion.VistaAgregarProducto;
 import Presentacion.VistaAgregarUsuario;
 import Presentacion.VistaAgregarVendedor;
 import Presentacion.VistaAlmacen;
+import Presentacion.VistaBalanceGeneral;
 import Presentacion.VistaCambioCalzado;
+import Presentacion.VistaComiciones;
 import Presentacion.VistaConsultaProducto;
 import Presentacion.VistaConsultaProductoRealizada;
 import Presentacion.VistaConsultaRealizada;
@@ -51,7 +53,9 @@ public class Aplicacion {
 		VistaAgregarUsuario vistaadduser = new VistaAgregarUsuario();
 		VistaAgregarVendedor vistaaddvendedor = new VistaAgregarVendedor();
 		VistaAlmacen vistaalmacen = new VistaAlmacen();
+		VistaBalanceGeneral vistabalancegeneral = new VistaBalanceGeneral();
 		VistaCambioCalzado vistacambio = new VistaCambioCalzado();
+		VistaComiciones vistacomiciones = new VistaComiciones();
 		VistaConsultaProducto vistaconsultaproducto = new VistaConsultaProducto();
 		VistaConsultaProductoRealizada vistaconsultaproductorealizada = new VistaConsultaProductoRealizada();
 		VistaConsultaRealizada vistaconsultarealizada = new VistaConsultaRealizada();
@@ -88,6 +92,7 @@ public class Aplicacion {
 		vistaaddvendedor.setControl(controlvendedores);
 		vistaalmacen.setControl(controlalmacen);
 		vistacambio.setControl(controlventa);
+		vistacomiciones.setControl(controlventa);
 		vistaconsultaproducto.setControl(controlalmacen);
 		vistaconsultaproductorealizada.setControl(controlalmacen);
 		vistaconsultarealizada.setControl(controlvendedores);
@@ -119,6 +124,7 @@ public class Aplicacion {
 		controlventa.setServicioTicket(servicioticket);
 		controlventa.setServicioVenta(servicioventa);
 		controlventa.setVistaCambioCalzado(vistacambio);
+		controlventa.setVistaComiciones(vistacomiciones);
 		controlventa.setVistaLogin(vistalogin);
 		controlventa.setVistaTicket(vistaticket);
 		controlventa.setVistaVendedor(vistavendedor);

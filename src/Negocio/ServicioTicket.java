@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Modelo.Ticket;
+import Modelo.Usuario;
 import Persistencia.DAOTicket;
 
 public class ServicioTicket {
@@ -25,15 +26,15 @@ public class ServicioTicket {
 	public Ticket dameTicket(int folio) {
 		return daoticket.buscaTicket(folio);
 	}
-	
-	public boolean modificaTicket(int folio, String fecha,String idvendedor, int codigo, double total, double iva) {
+
+	public boolean modificaTicket(int folio, String fecha, String idvendedor, int codigo, double total, double iva) {
 		return daoticket.modificaTicket(folio, fecha, idvendedor, codigo, total, iva);
 	}
-	
+
 	public Ticket[] obtenTodosTickets() {
 		return daoticket.dameTickets();
 	}
-	
+
 	public int dameCantidadTickets() {
 		return daoticket.cantidadTickets();
 	}
@@ -41,8 +42,23 @@ public class ServicioTicket {
 	public int dameFolio() {
 		return daoticket.cantidadTickets() + 1;
 	}
-	
 
+	public double obtenerComicionVendedor(Usuario user) {
+		double comicion = 0;
+		for (Ticket t : daoticket.dameTickets())
+			if (user.getId().equals(t.getIdvendedor()))
+				comicion += t.getTotal() * 0.05;
+		return comicion;
+	}
+	
+	public int obtenerCantidadVentasVendedor(Usuario user) {
+		int vendidos = 0;
+		for (Ticket t : daoticket.dameTickets())
+			if (user.getId().equals(t.getIdvendedor()))
+				vendidos += t.getVendidos();
+		return vendidos;
+	}
+	
 	// Este método nos permite obtener la fecha, para pasarla al ticket impreso.
 	public String getFechaActual() {
 		Date ahora = new Date();

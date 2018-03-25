@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Modelo.Componentes;
-import Negocio.ControlVendedores;
+import Negocio.ControlVenta;
 
 @SuppressWarnings("serial")
 public class VistaComiciones extends JFrame {
@@ -23,7 +23,7 @@ public class VistaComiciones extends JFrame {
 	// Variables Globales
 	private JButton regresar;
 	private JLabel lblnombre, lblventas, lblcomicion;
-	private ControlVendedores control;
+	private ControlVenta control;
 
 	// Muestra Solo la Presentacion de la Vista
 	public static void main(String[] args) {
@@ -57,7 +57,7 @@ public class VistaComiciones extends JFrame {
 			public void windowClosing(WindowEvent evt) {
 				if (JOptionPane.showConfirmDialog(rootPane, "¿Desea Realmente Salir del Balance?",
 						"¿Salir del Balance?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					control.muestraVistaAdministrador();
+					control.muestraVistaAdministarVendedores();
 					dispose();
 				}
 			}
@@ -90,8 +90,8 @@ public class VistaComiciones extends JFrame {
 		nombre = componente.creaEtiqueta("Vendedor:", 40, 100, 220, 25, 16);
 		ventas = componente.creaEtiqueta("Ventas Realizadas:", 40, 140, 220, 25, 16);	
 		comicion = componente.creaEtiqueta("Comicion Obtenida:   $", 60, 200, 220, 25, 18);
-		lblnombre = componente.creaEtiqueta("Nombre", 240, 100, 140, 25, 16);
-		lblventas = componente.creaEtiqueta("Venta", 240, 140, 140, 25, 16);
+		lblnombre = componente.creaEtiqueta("Nombre", 200, 100, 220, 25, 16);
+		lblventas = componente.creaEtiqueta("Venta", 200, 140, 220, 25, 16);
 		lblcomicion = componente.creaEtiqueta("Comicion", 260, 200, 180, 25, 18);
 		nombre.setToolTipText("Nombre del Vendedor");
 		ventas.setToolTipText("Muestra las Cantidad de Ventas Realizadas");
@@ -121,11 +121,17 @@ public class VistaComiciones extends JFrame {
 		regresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				control.muestraVistaAdministarVendedores();
+				control.muestraVistaVendedor();
 				control.limpiarDatos("AgregarVendedor");
 				dispose();
 			}
 		});
+	}
+	
+	public void obtenDatosComicion(String nombre, double comicion, int vendidos) {
+		lblnombre.setText(nombre);
+		lblventas.setText(String.valueOf(vendidos));
+		lblcomicion.setText(String.format("%.2f", comicion));
 	}
 
 	// Metodo que limpia los TextFields
@@ -136,8 +142,8 @@ public class VistaComiciones extends JFrame {
 	}
 
 	// Obtenemos la Instancia del Control Vendedor
-	public void setControl(ControlVendedores controlvendedores) {
-		this.control = controlvendedores;
+	public void setControl(ControlVenta controlventa) {
+		this.control = controlventa;
 	}
 
 }

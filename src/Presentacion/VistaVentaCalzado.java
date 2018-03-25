@@ -31,7 +31,7 @@ public class VistaVentaCalzado extends JFrame {
 	private ControlVenta control;
 	private JTable table;
 	private DefaultTableModel modelo = new DefaultTableModel(new Object[][] {},
-			new String[] { "Modelo", "Tipo", "Color", "Talla", "Costo", "Disponibles", "Pares a vender" }) {
+			new String[] { "Modelo", "Tipo", "Color", "Talla", "Costo", "Disponibles", "Pares a Vender" }) {
 		@SuppressWarnings("rawtypes")
 		Class[] columnTypes = new Class[] { String.class, String.class, String.class, Double.class, Double.class,
 				Integer.class, Object.class };

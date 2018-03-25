@@ -126,7 +126,7 @@ public class ControlVendedores {
 	public boolean eliminarVendedor(Usuario vendedor) {
 		return serviciovendedores.eliminarVendedor(vendedor);
 	}
-	
+
 	public void cargarDatosVendedores() {
 		String[] nuevo = new String[vistamostrarvvendedores.getTablaModelo().getColumnCount()];
 		for (Usuario vendedor : serviciovendedores.dameVendedores()) {
