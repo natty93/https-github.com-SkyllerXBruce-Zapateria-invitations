@@ -178,7 +178,7 @@ public class VistaEliminarProducto extends JFrame {
 					if (!productomodelo.isEmpty())
 						if (!productotipo.isEmpty())
 							if (!productocolor.isEmpty()) {
-								if (control.esNumero(ttalla.getText()))
+								if (control.esNumeroReal(ttalla.getText()))
 									productotalla = Double.valueOf(ttalla.getText());
 								if (productotalla > 0)
 									if (control.existeProducto(productomodelo, productotipo, productocolor,
@@ -212,7 +212,7 @@ public class VistaEliminarProducto extends JFrame {
 						JOptionPane.showMessageDialog(null, "Es Necesario Escribir el Modelo");
 				} else if (porcodigo) {
 					int codigop = 0;
-					if (control.esNumero(tcodigo.getText()))
+					if (control.esNumeroReal(tcodigo.getText()))
 						codigop = Integer.valueOf(tcodigo.getText());
 					if (codigop != 0) {
 						if (control.existeProducto(codigop)) {
