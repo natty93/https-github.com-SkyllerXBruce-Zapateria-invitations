@@ -15,6 +15,16 @@ public class ServicioAlmacen {
 		return dao.buscaProducto(modelo, tipo);
 	}
 
+	public Producto buscaProducto(String modelo, String tipo, String color, double talla) {
+		return dao.buscaProducto(modelo, tipo, color, talla);
+	}
+
+	public boolean existeProducto(String modelo, String tipo) {
+		if (dao.buscaProducto(modelo, tipo) != null)
+			return true;
+		return false;
+	}
+
 	public Producto[] dameProductos() {
 		return dao.dameProductos();
 	}

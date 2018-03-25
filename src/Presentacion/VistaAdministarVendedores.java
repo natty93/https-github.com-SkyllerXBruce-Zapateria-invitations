@@ -54,7 +54,8 @@ public class VistaAdministarVendedores extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent evt) {
-				if (JOptionPane.showConfirmDialog(rootPane, "¿Desea Realmente Cerrar Sesión?", "Cerrar Sesión",
+				if (JOptionPane.showConfirmDialog(rootPane, "¿Desea Realmente Salir del Administrador de Vendedores?",
+						"¿Salir del Administrador de Vendedores?",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					control.muestraVistaAdministrador();
 					dispose();
@@ -69,9 +70,9 @@ public class VistaAdministarVendedores extends JFrame {
 		JPanel panel = new JPanel(null);
 		Componentes componente = new Componentes();
 		JLabel titulo;
-		
+
 		setContentPane(panel);
-		
+
 		// Imagen del Boton regresar
 		ImageIcon imgIcon = new ImageIcon(VistaAdministarVendedores.class.getResource("return.png"));
 		Image user = imgIcon.getImage();
@@ -97,7 +98,7 @@ public class VistaAdministarVendedores extends JFrame {
 
 		// Se Realiza Acciones de los Componentes
 		accionesComponentes();
-		
+
 		// Agregamos los Componentes al Panel
 		panel.add(titulo);
 		panel.add(agregar);
@@ -109,7 +110,7 @@ public class VistaAdministarVendedores extends JFrame {
 
 	// Método para Crear las Acciones de Los Componentes
 	private void accionesComponentes() {
-		// Accion del boton Agregar 
+		// Accion del boton Agregar
 		agregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -145,7 +146,7 @@ public class VistaAdministarVendedores extends JFrame {
 				dispose();
 			}
 		});
-		
+
 		// Accion de Boton Regresar
 		regresar.addMouseListener(new MouseAdapter() {
 			@Override

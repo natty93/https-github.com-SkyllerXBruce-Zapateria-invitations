@@ -5,6 +5,7 @@ import Presentacion.VistaAdministarVendedores;
 import Presentacion.VistaAdministrador;
 import Presentacion.VistaAgregarUsuario;
 import Presentacion.VistaAgregarVendedor;
+import Presentacion.VistaBalanceGeneral;
 import Presentacion.VistaConsultaRealizada;
 import Presentacion.VistaConsultarVendedor;
 import Presentacion.VistaEliminarVendedor;
@@ -20,10 +21,16 @@ public class ControlVendedores {
 	private VistaEliminarVendedor vistaeleminarvendedor;
 	private VistaConsultarVendedor vistaconsultarvendedor;
 	private VistaConsultaRealizada vistaconsultarealizada;
+	private VistaBalanceGeneral vistabalancegeneral;
 	private ServicioVendedores serviciovendedores;
+	private ServicioTicket servicioticket;
 
 	public void setServicioVendedores(ServicioVendedores serviciovendedores) {
 		this.serviciovendedores = serviciovendedores;
+	}
+
+	public void setServicioTicket(ServicioTicket servicioticket) {
+		this.servicioticket = servicioticket;
 	}
 
 	public void setVistaAdministrador(VistaAdministrador vistaadmin) {
@@ -56,6 +63,10 @@ public class ControlVendedores {
 
 	public void setVistaConsultaRealizada(VistaConsultaRealizada vistaconsultarealizada) {
 		this.vistaconsultarealizada = vistaconsultarealizada;
+	}
+
+	public void setVistaBalanceGeneral(VistaBalanceGeneral vistabalancegeneral) {
+		this.vistabalancegeneral = vistabalancegeneral;
 	}
 
 	public void muestraVistaAdministarVendedores() {
@@ -94,6 +105,10 @@ public class ControlVendedores {
 	public void obtenerDatosVendedor(String[] datosvendedor) {
 		vistaadduser.obtenerDatosVendedor(datosvendedor);
 	}
+	
+	public void muestraVistaBalanceGeneral() {
+		vistabalancegeneral.setVisible(true);
+	}
 
 	public String generaId() {
 		int contador = 0;
@@ -126,7 +141,7 @@ public class ControlVendedores {
 	public boolean eliminarVendedor(Usuario vendedor) {
 		return serviciovendedores.eliminarVendedor(vendedor);
 	}
-	
+
 	public void cargarDatosVendedores() {
 		String[] nuevo = new String[vistamostrarvvendedores.getTablaModelo().getColumnCount()];
 		for (Usuario vendedor : serviciovendedores.dameVendedores()) {
@@ -140,6 +155,17 @@ public class ControlVendedores {
 				vistamostrarvvendedores.getTablaModelo().addRow(nuevo);
 			}
 		}
+	}
+
+	public void obtenDatosBalanceGeneral() {
+		double ganancias = 0, comicion = 0;
+		int vendidos = 0;
+		for (Usuario user : serviciovendedores.dameVendedores()) {
+			vendidos += servicioticket.obtenerCantidadVentasVendedor(user);
+			ganancias += servicioticket.obtenerGananciasVendedor(user);
+			comicion += servicioticket.obtenerComicionVendedor(user);
+		}
+		vistabalancegeneral.obtenDatosBalanceGeneral(vendidos, comicion, ganancias);
 	}
 
 	public void limpiarDatos(String limpiar) {

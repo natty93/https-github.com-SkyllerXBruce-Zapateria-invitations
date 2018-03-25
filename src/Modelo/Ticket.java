@@ -2,19 +2,20 @@ package Modelo;
 
 public class Ticket {
 	// declaramos atributos de ticket
-	private int folio = 0, codigoproducto = 0, vendidos=0;
+	private int folio = 0, codigoproducto = 0, vendidos = 0;
 	private String idvendedor, fecha;
 	private double iva = 0, total = 0;
 
 	// Constructor para asignar valores al ticket.
-	public Ticket(int folio, String fecha, String idvendedor, int codigoproducto, double iva, double total, int vendidos) {
+	public Ticket(int folio, String fecha, String idvendedor, int codigoproducto, double iva, double total,
+			int vendidos) {
 		this.folio = folio;
 		this.fecha = fecha;
 		this.idvendedor = idvendedor;
 		this.codigoproducto = codigoproducto;
 		this.iva = iva;
 		this.total = total;
-		this.vendidos=vendidos;
+		this.vendidos = vendidos;
 	}
 
 	public int getVendidos() {

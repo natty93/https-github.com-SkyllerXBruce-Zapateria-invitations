@@ -13,6 +13,7 @@ import Modelo.Ticket;
 import Modelo.Usuario;
 import Presentacion.VistaAdministarVendedores;
 import Presentacion.VistaCambioCalzado;
+import Presentacion.VistaComiciones;
 import Presentacion.VistaLogin;
 import Presentacion.VistaTicket;
 import Presentacion.VistaVendedor;
@@ -26,6 +27,7 @@ public class ControlVenta implements Printable {
 	private VistaLogin vistalogin;
 	private VistaVendedor vistavendedor;
 	private VistaAdministarVendedores vistaadminvendedores;
+	private VistaComiciones vistacomiciones;
 	private ServicioVenta servicioventa;
 	private ServicioTicket servicioticket;
 	private ServicioAlmacen servicioalmacen;
@@ -73,6 +75,10 @@ public class ControlVenta implements Printable {
 	public void setVistaAdministarVendedores(VistaAdministarVendedores vistaadminvendedores) {
 		this.vistaadminvendedores = vistaadminvendedores;
 	}
+	
+	public void setVistaComiciones(VistaComiciones vistacomiciones) {
+		this.vistacomiciones = vistacomiciones;
+	}
 
 	// Mostramos Ventana de Venta de Calzado
 	public void muestraVistaAdministarVendedores() {
@@ -96,6 +102,10 @@ public class ControlVenta implements Printable {
 	//
 	public void muestraVistaVendedor() {
 		vistavendedor.setVisible(true);
+	}
+	
+	public void muestraVistaComiciones() {
+		vistacomiciones.setVisible(true);
 	}
 
 	// Agregamos Vista ticket
@@ -191,6 +201,8 @@ public class ControlVenta implements Printable {
 			vistacambio.setFolioventa("");
 			for (int i = vistacambio.getTablaModeloCambio().getRowCount() - 1; i >= 0; i--)
 				vistacambio.getTablaModeloCambio().removeRow(i);
+		} else if (tipo.equals("Comicion")) {
+			vistacomiciones.limpiarDatosComiciones();
 		}
 	}
 
@@ -210,7 +222,8 @@ public class ControlVenta implements Printable {
 	}
 
 	// Creamos el ticket de Cambio
-	public void creaTicketCambio(int folio, Producto producto, double iva, double total, double diferencia) {
+	public void creaTicketCambio(int folio, Producto producto, double iva, double total, double diferencia,
+			double tventa) {
 		vistaticket.setFolio(String.valueOf(folio));
 		vistaticket.setFecha(servicioticket.getFechaActual());
 		vistaticket.setModelo(producto.dameModelo());
@@ -221,14 +234,14 @@ public class ControlVenta implements Printable {
 		vistaticket.setIva(String.format("%.2f", iva));
 		vistaticket.setPrecioUnitario(String.format("%.2f", producto.dameCosto()));
 		vistaticket.setTotal(String.format("%.2f", diferencia));
-		vistaticket.setTotalAnterior(String.format("%.2f", diferencia));
+		vistaticket.setTotalAnterior(String.format("%.2f", tventa));
 		vistaticket.setVisible(true);
 	}
 
 	public boolean cambioProducto(int folio) {
 		int fila = -1;
-		String modelocambio, tipocambio;
-		double total = 0, iva = 0, diferencia = 0, tventa = 0;
+		String modelocambio, tipocambio, colorcambio;
+		double total = 0, iva = 0, diferencia = 0, tventa = 0, tallacambio = 0;
 		boolean seleccion;
 		for (int i = 0; i < vistacambio.getTablaModeloCambio().getRowCount(); i++) {
 			seleccion = (boolean) vistacambio.getTablaModeloCambio().getValueAt(i, 7);
@@ -238,20 +251,48 @@ public class ControlVenta implements Printable {
 		if (fila >= 0) {
 			modelocambio = (String) vistacambio.getTablaModeloCambio().getValueAt(fila, 0);
 			tipocambio = (String) vistacambio.getTablaModeloCambio().getValueAt(fila, 1);
-			Producto producto = servicioalmacen.buscaProducto(modelocambio, tipocambio);
+			colorcambio = (String) vistacambio.getTablaModeloCambio().getValueAt(fila, 2);
+			tallacambio = (double) vistacambio.getTablaModeloCambio().getValueAt(fila, 3);
+			Producto productocambio = servicioalmacen.buscaProducto(modelocambio, tipocambio, colorcambio, tallacambio);
+			Producto productoventa = servicioalmacen.buscaProducto(folio);
 			Usuario user = getVendedor();
 			total = (double) vistacambio.getTablaModeloCambio().getValueAt(fila, 5);
-			iva = producto.dameCosto() * 0.16;
+			iva = productocambio.dameCosto() * 0.16;
 			if (JOptionPane.showConfirmDialog(null, "¿Realmente Desea Realizar el Cambio?", "¿Cambio?",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				if (servicioticket.modificaTicket(folio, servicioticket.getFechaActual(), user.getId(),
-						producto.dameCodigo(), total, iva)) {
-					tventa = (double) vistacambio.getTablaModeloVenta().getValueAt(0, 5);
-					diferencia = (producto.dameCosto() * 1.16) - tventa;
-					creaTicketCambio(folio, producto, iva, total, diferencia);
-					return true;
-				} else
+				if (servicioalmacen.eliminarProducto(productocambio)) {
+					productocambio.setCantidad(productocambio.dameCantidad() - 1);
+					servicioalmacen.agregarProducto(productocambio);
+					if (servicioticket.modificaTicket(folio, servicioticket.getFechaActual(), user.getId(),
+							productocambio.dameCodigo(), total, iva)) {
+						if (servicioalmacen.eliminarProducto(productoventa)) {
+							productoventa.setCantidad(productoventa.dameCantidad() + 1);
+							servicioalmacen.agregarProducto(productoventa);
+							tventa = (double) vistacambio.getTablaModeloVenta().getValueAt(0, 5);
+							diferencia = (productocambio.dameCosto() * 1.16) - tventa;
+							creaTicketCambio(folio, productocambio, iva, total, diferencia, tventa);
+							return true;
+						} else {
+							servicioalmacen.eliminarProducto(productocambio);
+							productocambio.setCantidad(productocambio.dameCantidad() + 1);
+							servicioalmacen.agregarProducto(productocambio);
+							JOptionPane.showMessageDialog(null, "No Se Pudo Realizar el Cambio");
+							muestraVistaVendedor();
+							limpiarDatos("Cambio");
+						}
+					} else {
+						servicioalmacen.eliminarProducto(productocambio);
+						productocambio.setCantidad(productocambio.dameCantidad() + 1);
+						servicioalmacen.agregarProducto(productocambio);
+						JOptionPane.showMessageDialog(null, "No Se Pudo Realizar el Cambio");
+						muestraVistaVendedor();
+						limpiarDatos("Cambio");
+					}
+				} else {
 					JOptionPane.showMessageDialog(null, "No Se Pudo Realizar el Cambio");
+					muestraVistaVendedor();
+					limpiarDatos("Cambio");
+				}
 			}
 		} else
 			JOptionPane.showMessageDialog(null, "Seleccione un Producto para Realizar Cambio");
@@ -263,14 +304,29 @@ public class ControlVenta implements Printable {
 		Usuario user = getVendedor();
 		String fecha;
 		double iva, total;
-		int folio, vendidos;
+		int folio, vendidos, cantidad;
 		folio = Integer.valueOf(datosTicket[0]);
 		fecha = datosTicket[1];
 		iva = Double.valueOf(datosTicket[4]);
 		total = Double.valueOf(datosTicket[5]);
 		vendidos = Integer.valueOf(datosTicket[6]);
-		Ticket ticket = new Ticket(folio, fecha, user.getId(), producto.dameCodigo(), iva, total, vendidos);
-		servicioticket.agregaTicket(ticket);
+		cantidad = producto.dameCantidad();
+		if (cantidad != 0) {
+			servicioalmacen.eliminarProducto(producto);
+			producto.setCantidad(cantidad - 1);
+			if (producto.dameCantidad() > 0)
+				servicioalmacen.agregarProducto(producto);
+			Ticket ticket = new Ticket(folio, fecha, user.getId(), producto.dameCodigo(), iva, total, vendidos);
+			servicioticket.agregaTicket(ticket);
+		} else
+			JOptionPane.showMessageDialog(null, "No hay Productos Disponibles");
+	}
+	
+	public void obtenDatosComiciones() {
+		Usuario user = getVendedor();
+		double comicion= servicioticket.obtenerComicionVendedor(user);
+		int vendidos = servicioticket.obtenerCantidadVentasVendedor(user);
+		vistacomiciones.obtenDatosComicion(user.getNombre(),comicion,vendidos);
 	}
 
 	// Este método imprime el ticket.
@@ -303,11 +359,17 @@ public class ControlVenta implements Printable {
 	}
 
 	public boolean esNumero(String num) {
+		int puntos = 0, tam = num.length();
 		if (num.isEmpty())
 			return false;
 		for (Character c : num.toCharArray())
 			if (!Character.isDigit(c))
-				return false;
+				if (c.equals('.') && tam > 1) {
+					if (puntos > 0)
+						return false;
+					puntos++;
+				} else
+					return false;
 		return true;
 	}
 

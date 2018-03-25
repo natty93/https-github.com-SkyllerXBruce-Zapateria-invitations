@@ -79,7 +79,7 @@ public class VistaAdministrador extends JFrame {
 		// Creamos y Agregamos las Propiedades del Método creaBoton para Cada Boton
 		vendedores = componente.creaBoton("Vendedores", 360, 100, 120, 30);
 		almacen = componente.creaBoton("Almacen", 360, 150, 120, 30);
-		balance = componente.creaBoton("Comiciones", 360, 200, 120, 30);
+		balance = componente.creaBoton("Balance", 360, 200, 120, 30);
 		cerrarsesion = componente.creaBoton("Cerrar Sesión", 20, 240, 140, 30);
 		vendedores.setToolTipText("Accesar a los Vendedores (Agregar, Consultar, Eliminar, Listar)");
 		almacen.setToolTipText("Accesar al Almacen de Productos (Agregar, Consultar, Eliminar, Listar)");
@@ -131,7 +131,9 @@ public class VistaAdministrador extends JFrame {
 		balance.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Click en Comiciones");
+				control.obtenDatosBalanceGeneral();
+				control.muestraVistaBalanceGeneral();
+				dispose();
 			}
 		});
 

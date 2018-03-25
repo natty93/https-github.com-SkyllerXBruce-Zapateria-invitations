@@ -104,7 +104,7 @@ public class VistaTicket extends JFrame {
 		lbldanterior = new JLabel("");
 		regresar = new JButton("");
 		imprimir = new JButton("Imprimir");
-		
+
 		ImageIcon imgIconregresa = new ImageIcon(VistaLogin.class.getResource("return.png"));
 		Image user = imgIconregresa.getImage();
 		Image userScaled = user.getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
@@ -277,8 +277,11 @@ public class VistaTicket extends JFrame {
 						"Realizar Compra", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					control.imprimeTicket();
 					cambio = control.realizaCambio();
-					if (!cambio) 
+					if (!cambio) {
 						control.almacenarDatosTicket(obtenerDatosTicket());
+						JOptionPane.showMessageDialog(null, "Venta Realizada con Exito");
+					}else
+						JOptionPane.showMessageDialog(null, "Cambio Realizado con Exito");
 					control.muestraVistaVendedor();
 					control.limpiarDatos("Venta");
 					dispose();
