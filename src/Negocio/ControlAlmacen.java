@@ -122,7 +122,7 @@ public class ControlAlmacen {
 		return servicioalmacen.eliminarProducto(producto);
 	}
 
-	// Metodo para Obtener los Datos de Todos los Productos y Cargar los a la Tabla
+	// Metodo para Obtener los Datos de Todos los Productos y los Cargar a la Tabla
 	public void cargarDatosProductos() {
 		String[] nuevo = new String[vistamostrarproductos.getTablaModelo().getColumnCount()];
 		for (Producto producto : servicioalmacen.dameProductos()) {

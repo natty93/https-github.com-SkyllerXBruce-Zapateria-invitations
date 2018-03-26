@@ -29,17 +29,12 @@ public class ControlVenta implements Printable {
 	private VistaVendedor vistavendedor;
 	private VistaAdministarVendedores vistaadminvendedores;
 	private VistaComiciones vistacomiciones;
-	private ServicioVenta servicioventa;
 	private ServicioTicket servicioticket;
 	private ServicioAlmacen servicioalmacen;
 	private ServicioLogin serviciologin;
 	private Usuario user;
 
 	// Agrega las Instancias de las Vistas al Control de Venta
-	public void setServicioVenta(ServicioVenta servicioventa) {
-		this.servicioventa = servicioventa;
-	}
-
 	public void setServicioTicket(ServicioTicket servicioticket) {
 		this.servicioticket = servicioticket;
 	}
@@ -124,7 +119,7 @@ public class ControlVenta implements Printable {
 	// de consulta.
 	public void buscaProducto(int id) {
 		Object[] fila = new Object[vistaventacalzado.getTablaModelo().getColumnCount()];
-		Producto producto = servicioventa.buscaProducto(id);
+		Producto producto = servicioalmacen.buscaProducto(id);
 		if (producto != null) {
 			fila[0] = producto.dameModelo();
 			fila[1] = producto.dameTipo();
@@ -261,7 +256,7 @@ public class ControlVenta implements Printable {
 
 	// Creamos el ticket de venta
 	public void creaTicketVenta() {
-		vistaticket.setFolio(String.valueOf(servicioticket.dameFolio()));
+		vistaticket.setFolio(String.valueOf(servicioticket.generaFolio()));
 		vistaticket.setFecha(servicioticket.getFechaActual());
 		vistaticket.setModelo((String) vistaventacalzado.getTablaModelo().getValueAt(0, 0));
 		vistaticket.setTipo((String) vistaventacalzado.getTablaModelo().getValueAt(0, 1));
