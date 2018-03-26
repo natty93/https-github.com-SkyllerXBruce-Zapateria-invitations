@@ -66,7 +66,7 @@ public class VistaAdministarVendedores extends JFrame {
 
 	// Creamos y Agregamos los Componetes de la Ventana
 	private void iniciarComponentes() {
-		// creamos el panel y lo agregamos a la ventana
+		// creamos el panel y Componentes Nesesarios para la ventana
 		JPanel panel = new JPanel(null);
 		Componentes componente = new Componentes();
 		JLabel titulo;
